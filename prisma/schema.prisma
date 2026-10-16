@@ -66,6 +66,32 @@ enum ContentStatus {
   @@map("content_status")
 }
 
+enum PathwayTrack {
+  licensing
+  immigration
+
+  @@map("pathway_track")
+}
+
+enum RequirementKind {
+  eligibility
+  document
+  exam
+  language
+  other
+
+  @@map("requirement_kind")
+}
+
+enum PlanRequirementStatus {
+  not_started
+  in_progress
+  completed
+  not_applicable
+
+  @@map("plan_requirement_status")
+}
+
 enum ResourceType {
   regulator_guidance
   application_portal
@@ -89,12 +115,22 @@ model Country {
   @@map("countries")
 }
 
+model Profession {
+  code     String  @id
+  name     String
+  isActive Boolean @default(false) @map("is_active")
+
+  pathways Pathway[]
+
+  @@map("professions")
+}
+
 model Regulator {
-  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  country    String            @db.Char(2)
-  name       String
-  shortName  String            @map("short_name")
-  
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  country   String @db.Char(2)
+  name      String
+  shortName String @map("short_name")
+
   countryRel Country           @relation(fields: [country], references: [code])
   domains    RegulatorDomain[]
   pathways   Pathway[]
@@ -105,9 +141,9 @@ model Regulator {
 }
 
 model RegulatorDomain {
-  regulatorId  String    @map("regulator_id") @db.Uuid
-  domain       String
-  
+  regulatorId String @map("regulator_id") @db.Uuid
+  domain      String
+
   regulatorRel Regulator @relation(fields: [regulatorId], references: [id])
 
   @@id([regulatorId, domain])
@@ -115,19 +151,25 @@ model RegulatorDomain {
 }
 
 model Pathway {
-  id           String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  country      String            @db.Char(2)
-  regulatorId  String            @map("regulator_id") @db.Uuid
-  slug         String            @unique
-  name         String
-  profession   String            @default("doctor")
-  isActive     Boolean           @default(true) @map("is_active")
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  country     String       @db.Char(2)
+  regulatorId String       @map("regulator_id") @db.Uuid
+  slug        String       @unique
+  name        String
+  profession  String       @default("doctor")
+  track       PathwayTrack @default(licensing)
+  isActive    Boolean      @default(true) @map("is_active")
 
-  countryRel   Country           @relation(fields: [country], references: [code])
-  regulatorRel Regulator         @relation(fields: [regulatorId], references: [id])
-  resources    Resource[]
-  plans        Plan[]
-  planTasks    PlanTask[]
+  countryRel       Country           @relation(fields: [country], references: [code])
+  regulatorRel     Regulator         @relation(fields: [regulatorId], references: [id])
+  professionRel    Profession        @relation(fields: [profession], references: [code])
+  resources        Resource[]
+  requirements     Requirement[]
+  costs            PathwayCost[]
+  licensingLinks   PathwayLink[]     @relation("LicensingSide")
+  immigrationLinks PathwayLink[]     @relation("ImmigrationSide")
+  plans            Plan[]
+  planTasks        PlanTask[]
   destinationGoals DestinationGoal[]
 
   @@map("pathways")
@@ -144,11 +186,17 @@ model Resource {
   verifiedDate  DateTime?     @map("verified_date") @db.Date
   reviewDueDate DateTime?     @map("review_due_date") @db.Date
   status        ContentStatus @default(draft)
+  version       Int           @default(1)
+  supersedesId  String?       @map("supersedes_id") @db.Uuid
   createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz
 
   regulatorRel  Regulator     @relation(fields: [regulatorId], references: [id])
   countryRel    Country       @relation(fields: [country], references: [code])
   pathwayRel    Pathway?      @relation(fields: [pathwayId], references: [id])
+  supersedesRel Resource?     @relation("ResourceVersions", fields: [supersedesId], references: [id])
+  supersededBy  Resource[]    @relation("ResourceVersions")
+  requirements  Requirement[]
+  costs         PathwayCost[]
 
   @@map("resources")
 }
@@ -162,6 +210,7 @@ model Profile {
   graduationYear       Int?               @map("graduation_year")
   internshipStatus     InternshipStatus   @default(unknown) @map("internship_status")
   specialty            String?
+  profession           String?
   languageTestStatus   LanguageTestStatus @default(unknown) @map("language_test_status")
   timeline             TimelineWindow     @default(unknown)
   createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz
@@ -171,12 +220,12 @@ model Profile {
 }
 
 model DestinationGoal {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String   @map("user_id") @db.Uuid
-  country    String   @db.Char(2)
-  pathwayId  String?  @map("pathway_id") @db.Uuid
-  priority   Int      @default(1) @db.SmallInt
-  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  country   String   @db.Char(2)
+  pathwayId String?  @map("pathway_id") @db.Uuid
+  priority  Int      @default(1) @db.SmallInt
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
 
   countryRel Country  @relation(fields: [country], references: [code])
   pathwayRel Pathway? @relation(fields: [pathwayId], references: [id])
@@ -186,50 +235,129 @@ model DestinationGoal {
 }
 
 model Plan {
-  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String     @map("user_id") @db.Uuid
-  pathwayId  String     @map("pathway_id") @db.Uuid
-  status     String     @default("active")
-  createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  pathwayId String   @map("pathway_id") @db.Uuid
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
 
-  pathwayRel Pathway    @relation(fields: [pathwayId], references: [id])
-  tasks      PlanTask[]
+  pathwayRel   Pathway           @relation(fields: [pathwayId], references: [id])
+  tasks        PlanTask[]
+  requirements PlanRequirement[]
 
   @@unique([userId, pathwayId])
   @@map("plans")
 }
 
 model PlanTask {
-  id               String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  planId           String                 @map("plan_id") @db.Uuid
-  userId           String                 @map("user_id") @db.Uuid
-  pathwayId        String                 @map("pathway_id") @db.Uuid
-  title            String
-  description      String?
-  priority         TaskPriority           @default(medium)
-  status           PlanTaskStatus         @default(not_started)
-  sortOrder        Int                    @map("sort_order")
-  dueDate          DateTime?              @map("due_date") @db.Date
-  statusUpdatedAt  DateTime               @default(now()) @map("status_updated_at") @db.Timestamptz
-  completedAt      DateTime?              @map("completed_at") @db.Timestamptz
-  createdAt        DateTime               @default(now()) @map("created_at") @db.Timestamptz
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  planId          String         @map("plan_id") @db.Uuid
+  userId          String         @map("user_id") @db.Uuid
+  pathwayId       String         @map("pathway_id") @db.Uuid
+  title           String
+  description     String?
+  priority        TaskPriority   @default(medium)
+  status          PlanTaskStatus @default(not_started)
+  sortOrder       Int            @map("sort_order")
+  dueDate         DateTime?      @map("due_date") @db.Date
+  statusUpdatedAt DateTime       @default(now()) @map("status_updated_at") @db.Timestamptz
+  completedAt     DateTime?      @map("completed_at") @db.Timestamptz
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz
 
-  planRel          Plan                   @relation(fields: [planId], references: [id], onDelete: Cascade)
-  pathwayRel       Pathway                @relation(fields: [pathwayId], references: [id])
-  dependencies     PlanTaskDependency[]   @relation("TaskDependencies")
-  dependentOnMe    PlanTaskDependency[]   @relation("TaskDependents")
+  planRel       Plan                 @relation(fields: [planId], references: [id], onDelete: Cascade)
+  pathwayRel    Pathway              @relation(fields: [pathwayId], references: [id])
+  dependencies  PlanTaskDependency[] @relation("TaskDependencies")
+  dependentOnMe PlanTaskDependency[] @relation("TaskDependents")
 
   @@index([userId, planId])
   @@map("plan_tasks")
 }
 
 model PlanTaskDependency {
-  taskId          String   @map("task_id") @db.Uuid
-  dependsOnTaskId String   @map("depends_on_task_id") @db.Uuid
+  taskId          String @map("task_id") @db.Uuid
+  dependsOnTaskId String @map("depends_on_task_id") @db.Uuid
 
-  taskRel         PlanTask @relation("TaskDependencies", fields: [taskId], references: [id], onDelete: Cascade)
-  dependsOnRel    PlanTask @relation("TaskDependents", fields: [dependsOnTaskId], references: [id], onDelete: Cascade)
+  taskRel      PlanTask @relation("TaskDependencies", fields: [taskId], references: [id], onDelete: Cascade)
+  dependsOnRel PlanTask @relation("TaskDependents", fields: [dependsOnTaskId], references: [id], onDelete: Cascade)
 
   @@id([taskId, dependsOnTaskId])
   @@map("plan_task_dependencies")
+}
+
+model PathwayLink {
+  licensingPathwayId   String @map("licensing_pathway_id") @db.Uuid
+  immigrationPathwayId String @map("immigration_pathway_id") @db.Uuid
+
+  licensingRel   Pathway @relation("LicensingSide", fields: [licensingPathwayId], references: [id], onDelete: Cascade)
+  immigrationRel Pathway @relation("ImmigrationSide", fields: [immigrationPathwayId], references: [id], onDelete: Cascade)
+
+  @@id([licensingPathwayId, immigrationPathwayId])
+  @@map("pathway_links")
+}
+
+model Requirement {
+  id           String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  pathwayId    String          @map("pathway_id") @db.Uuid
+  key          String
+  version      Int             @default(1)
+  supersedesId String?         @map("supersedes_id") @db.Uuid
+  kind         RequirementKind
+  title        String
+  description  String?
+  isMandatory  Boolean         @default(true) @map("is_mandatory")
+  sortOrder    Int             @default(0) @map("sort_order")
+  resourceId   String          @map("resource_id") @db.Uuid
+  status       ContentStatus   @default(draft)
+  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamptz
+
+  pathwayRel       Pathway           @relation(fields: [pathwayId], references: [id])
+  resourceRel      Resource          @relation(fields: [resourceId], references: [id])
+  supersedesRel    Requirement?      @relation("RequirementVersions", fields: [supersedesId], references: [id])
+  supersededBy     Requirement[]     @relation("RequirementVersions")
+  planRequirements PlanRequirement[]
+
+  @@unique([pathwayId, key, version])
+  @@index([pathwayId, status])
+  @@map("requirements")
+}
+
+model PathwayCost {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  pathwayId    String        @map("pathway_id") @db.Uuid
+  key          String
+  version      Int           @default(1)
+  supersedesId String?       @map("supersedes_id") @db.Uuid
+  title        String
+  amount       Decimal       @db.Decimal(12, 2)
+  currency     String        @db.Char(3)
+  isEstimate   Boolean       @default(false) @map("is_estimate")
+  resourceId   String        @map("resource_id") @db.Uuid
+  status       ContentStatus @default(draft)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz
+
+  pathwayRel    Pathway       @relation(fields: [pathwayId], references: [id])
+  resourceRel   Resource      @relation(fields: [resourceId], references: [id])
+  supersedesRel PathwayCost?  @relation("CostVersions", fields: [supersedesId], references: [id])
+  supersededBy  PathwayCost[] @relation("CostVersions")
+
+  @@unique([pathwayId, key, version])
+  @@index([pathwayId, status])
+  @@map("pathway_costs")
+}
+
+model PlanRequirement {
+  id            String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  planId        String                @map("plan_id") @db.Uuid
+  userId        String                @map("user_id") @db.Uuid
+  requirementId String                @map("requirement_id") @db.Uuid
+  status        PlanRequirementStatus @default(not_started)
+  notes         String?
+  updatedAt     DateTime              @default(now()) @map("updated_at") @db.Timestamptz
+
+  planRel        Plan        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  requirementRel Requirement @relation(fields: [requirementId], references: [id])
+
+  @@unique([planId, requirementId])
+  @@index([userId, planId])
+  @@map("plan_requirements")
 }
