@@ -104,25 +104,164 @@ enum ResourceType {
   @@map("resource_type")
 }
 
+/// ISO 3166-1 registry. `code` is the alpha-2 key (iso2). Which countries are usable
+/// as origin/destination is data (flags here + `Offering` rows), never code.
 model Country {
   code             String            @id @db.Char(2)
   name             String
+  nameKey          String?           @map("name_key")
+  callingCode      String?           @map("calling_code")
+  defaultTimeZone  String?           @map("default_time_zone")
+  defaultCurrency  String?           @map("default_currency") @db.Char(3)
+  canBeOrigin      Boolean           @default(false) @map("can_be_origin")
+  canBeDestination Boolean           @default(false) @map("can_be_destination")
   regulators       Regulator[]
   pathways         Pathway[]
   resources        Resource[]
   destinationGoals DestinationGoal[]
+  originOfferings  Offering[]        @relation("OfferingOrigin")
+  destOfferings    Offering[]        @relation("OfferingDestination")
 
   @@map("countries")
 }
 
+/// `code` is the stable slug. `status` is one of live|beta|waitlist|hidden (CHECK in
+/// SQL). `isActive` is kept in sync (status in live,beta) for existing RLS/readers.
 model Profession {
-  code     String  @id
-  name     String
-  isActive Boolean @default(false) @map("is_active")
+  code           String  @id
+  name           String
+  isActive       Boolean @default(false) @map("is_active")
+  sectorId       String? @map("sector_id")
+  labelKey       String? @map("label_key")
+  labelPluralKey String? @map("label_plural_key")
+  status         String  @default("hidden")
+  isRegulated    Boolean @default(true) @map("is_regulated")
+  sortOrder      Int     @default(0) @map("sort_order")
 
-  pathways Pathway[]
+  sectorRel      Sector?         @relation(fields: [sectorId], references: [slug])
+  pathways       Pathway[]
+  offerings      Offering[]
+  profileSchemas ProfileSchema[]
 
   @@map("professions")
+}
+
+model Sector {
+  slug      String   @id
+  labelKey  String   @map("label_key")
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  professions Profession[]
+
+  @@map("sectors")
+}
+
+/// The single switch for what is launched. destination_country NULL = any destination.
+/// Unique on (profession, origin, coalesce(destination,'')) via a SQL expression index.
+model Offering {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  professionCode     String    @map("profession_code")
+  originCountry      String    @map("origin_country") @db.Char(2)
+  destinationCountry String?   @map("destination_country") @db.Char(2)
+  status             String    @default("hidden")
+  launchedAt         DateTime? @map("launched_at") @db.Timestamptz
+  notesInternal      String?   @map("notes_internal")
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt          DateTime  @default(now()) @map("updated_at") @db.Timestamptz
+
+  professionRel  Profession @relation(fields: [professionCode], references: [code])
+  originRel      Country    @relation("OfferingOrigin", fields: [originCountry], references: [code])
+  destinationRel Country?   @relation("OfferingDestination", fields: [destinationCountry], references: [code], onDelete: Restrict)
+
+  @@index([professionCode, originCountry])
+  @@map("offerings")
+}
+
+/// Localised text for reference data, so adding a profession/country/field needs rows,
+/// not a message-file deploy. UI chrome stays in next-intl message files.
+model ReferenceLabel {
+  key    String
+  locale String
+  text   String
+
+  @@id([key, locale])
+  @@map("reference_labels")
+}
+
+/// Named option lists (e.g. medical specialties) referenced from ProfileField.optionsJson.
+model ReferenceList {
+  key   String              @id
+  items ReferenceListItem[]
+
+  @@map("reference_lists")
+}
+
+model ReferenceListItem {
+  listKey   String @map("list_key")
+  value     String
+  labelKey  String @map("label_key")
+  sortOrder Int    @default(0) @map("sort_order")
+  status    String @default("live")
+
+  listRel ReferenceList @relation(fields: [listKey], references: [key], onDelete: Cascade)
+
+  @@id([listKey, value])
+  @@map("reference_list_items")
+}
+
+/// Reusable field definition. whyAskedKey is required (every field shows why it is asked).
+/// storage = 'answer' (ProfileAnswer row) or 'user_country' (virtual: reads/writes
+/// UserCountry for the role in storageJson.role).
+model ProfileField {
+  key            String   @id
+  type           String
+  labelKey       String   @map("label_key")
+  whyAskedKey    String   @map("why_asked_key")
+  helpKey        String?  @map("help_key")
+  optionsJson    Json?    @map("options_json")
+  validationJson Json?    @map("validation_json")
+  sensitivity    String   @default("standard")
+  category       String   @default("general")
+  storage        String   @default("answer")
+  storageJson    Json?    @map("storage_json")
+  purposeNote    String?  @map("purpose_note")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("profile_fields")
+}
+
+/// Ordered steps of field keys for (profession, origin). Resolution precedence:
+/// (profession+origin) > (profession) > default (both null). Highest published version wins.
+model ProfileSchema {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  professionCode String?   @map("profession_code")
+  originCountry  String?   @map("origin_country") @db.Char(2)
+  version        Int       @default(1)
+  steps          Json
+  publishedAt    DateTime? @map("published_at") @db.Timestamptz
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  professionRel Profession? @relation(fields: [professionCode], references: [code], onDelete: Restrict)
+
+  @@index([professionCode, originCountry])
+  @@map("profile_schemas")
+}
+
+/// Append-only. actorRef is non-identifying (e.g. 'system:seed' or an opaque id hash).
+model AuditEvent {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  action     String
+  entityType String?  @map("entity_type")
+  entityKey  String?  @map("entity_key")
+  actorRef   String   @map("actor_ref")
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([action, createdAt])
+  @@index([entityType, entityKey])
+  @@map("audit_events")
 }
 
 model Regulator {

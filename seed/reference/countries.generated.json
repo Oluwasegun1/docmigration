@@ -1,0 +1,1745 @@
+[
+  {
+    "iso2": "AD",
+    "name": "Andorra",
+    "callingCode": "+376",
+    "defaultTimeZone": "Europe/Andorra",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "AE",
+    "name": "United Arab Emirates",
+    "callingCode": "+971",
+    "defaultTimeZone": "Asia/Dubai",
+    "defaultCurrency": "AED"
+  },
+  {
+    "iso2": "AF",
+    "name": "Afghanistan",
+    "callingCode": "+93",
+    "defaultTimeZone": "Asia/Kabul",
+    "defaultCurrency": "AFN"
+  },
+  {
+    "iso2": "AG",
+    "name": "Antigua & Barbuda",
+    "callingCode": "+1268",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "AI",
+    "name": "Anguilla",
+    "callingCode": "+1264",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "AL",
+    "name": "Albania",
+    "callingCode": "+355",
+    "defaultTimeZone": "Europe/Tirane",
+    "defaultCurrency": "ALL"
+  },
+  {
+    "iso2": "AM",
+    "name": "Armenia",
+    "callingCode": "+374",
+    "defaultTimeZone": "Asia/Yerevan",
+    "defaultCurrency": "AMD"
+  },
+  {
+    "iso2": "AO",
+    "name": "Angola",
+    "callingCode": "+244",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "AOA"
+  },
+  {
+    "iso2": "AQ",
+    "name": "Antarctica",
+    "callingCode": "+672",
+    "defaultTimeZone": "Antarctica/Casey",
+    "defaultCurrency": null
+  },
+  {
+    "iso2": "AR",
+    "name": "Argentina",
+    "callingCode": "+54",
+    "defaultTimeZone": "America/Argentina/Buenos_Aires",
+    "defaultCurrency": "ARS"
+  },
+  {
+    "iso2": "AS",
+    "name": "American Samoa",
+    "callingCode": "+1684",
+    "defaultTimeZone": "Pacific/Pago_Pago",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "AT",
+    "name": "Austria",
+    "callingCode": "+43",
+    "defaultTimeZone": "Europe/Vienna",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "AU",
+    "name": "Australia",
+    "callingCode": "+61",
+    "defaultTimeZone": "Antarctica/Macquarie",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "AW",
+    "name": "Aruba",
+    "callingCode": "+297",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "AWG"
+  },
+  {
+    "iso2": "AX",
+    "name": "Åland Islands",
+    "callingCode": "+358",
+    "defaultTimeZone": "Europe/Helsinki",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "AZ",
+    "name": "Azerbaijan",
+    "callingCode": "+994",
+    "defaultTimeZone": "Asia/Baku",
+    "defaultCurrency": "AZN"
+  },
+  {
+    "iso2": "BA",
+    "name": "Bosnia & Herzegovina",
+    "callingCode": "+387",
+    "defaultTimeZone": "Europe/Belgrade",
+    "defaultCurrency": "BAM"
+  },
+  {
+    "iso2": "BB",
+    "name": "Barbados",
+    "callingCode": "+1246",
+    "defaultTimeZone": "America/Barbados",
+    "defaultCurrency": "BBD"
+  },
+  {
+    "iso2": "BD",
+    "name": "Bangladesh",
+    "callingCode": "+880",
+    "defaultTimeZone": "Asia/Dhaka",
+    "defaultCurrency": "BDT"
+  },
+  {
+    "iso2": "BE",
+    "name": "Belgium",
+    "callingCode": "+32",
+    "defaultTimeZone": "Europe/Brussels",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "BF",
+    "name": "Burkina Faso",
+    "callingCode": "+226",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "BG",
+    "name": "Bulgaria",
+    "callingCode": "+359",
+    "defaultTimeZone": "Europe/Sofia",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "BH",
+    "name": "Bahrain",
+    "callingCode": "+973",
+    "defaultTimeZone": "Asia/Qatar",
+    "defaultCurrency": "BHD"
+  },
+  {
+    "iso2": "BI",
+    "name": "Burundi",
+    "callingCode": "+257",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "BIF"
+  },
+  {
+    "iso2": "BJ",
+    "name": "Benin",
+    "callingCode": "+229",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "BL",
+    "name": "St. Barthélemy",
+    "callingCode": "+590",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "BM",
+    "name": "Bermuda",
+    "callingCode": "+1441",
+    "defaultTimeZone": "Atlantic/Bermuda",
+    "defaultCurrency": "BMD"
+  },
+  {
+    "iso2": "BN",
+    "name": "Brunei",
+    "callingCode": "+673",
+    "defaultTimeZone": "Asia/Kuching",
+    "defaultCurrency": "BND"
+  },
+  {
+    "iso2": "BO",
+    "name": "Bolivia",
+    "callingCode": "+591",
+    "defaultTimeZone": "America/La_Paz",
+    "defaultCurrency": "BOB"
+  },
+  {
+    "iso2": "BQ",
+    "name": "Caribbean Netherlands",
+    "callingCode": "+5997",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "BR",
+    "name": "Brazil",
+    "callingCode": "+55",
+    "defaultTimeZone": "America/Araguaina",
+    "defaultCurrency": "BRL"
+  },
+  {
+    "iso2": "BS",
+    "name": "Bahamas",
+    "callingCode": "+1242",
+    "defaultTimeZone": "America/Toronto",
+    "defaultCurrency": "BSD"
+  },
+  {
+    "iso2": "BT",
+    "name": "Bhutan",
+    "callingCode": "+975",
+    "defaultTimeZone": "Asia/Thimphu",
+    "defaultCurrency": "BTN"
+  },
+  {
+    "iso2": "BV",
+    "name": "Bouvet Island",
+    "callingCode": "+47",
+    "defaultTimeZone": null,
+    "defaultCurrency": "NOK"
+  },
+  {
+    "iso2": "BW",
+    "name": "Botswana",
+    "callingCode": "+267",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "BWP"
+  },
+  {
+    "iso2": "BY",
+    "name": "Belarus",
+    "callingCode": "+375",
+    "defaultTimeZone": "Europe/Minsk",
+    "defaultCurrency": "BYN"
+  },
+  {
+    "iso2": "BZ",
+    "name": "Belize",
+    "callingCode": "+501",
+    "defaultTimeZone": "America/Belize",
+    "defaultCurrency": "BZD"
+  },
+  {
+    "iso2": "CA",
+    "name": "Canada",
+    "callingCode": "+1",
+    "defaultTimeZone": "America/Cambridge_Bay",
+    "defaultCurrency": "CAD"
+  },
+  {
+    "iso2": "CC",
+    "name": "Cocos (Keeling) Islands",
+    "callingCode": "+61",
+    "defaultTimeZone": "Asia/Yangon",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "CD",
+    "name": "Congo - Kinshasa",
+    "callingCode": "+243",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "CDF"
+  },
+  {
+    "iso2": "CF",
+    "name": "Central African Republic",
+    "callingCode": "+236",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XAF"
+  },
+  {
+    "iso2": "CG",
+    "name": "Congo - Brazzaville",
+    "callingCode": "+242",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XAF"
+  },
+  {
+    "iso2": "CH",
+    "name": "Switzerland",
+    "callingCode": "+41",
+    "defaultTimeZone": "Europe/Zurich",
+    "defaultCurrency": "CHF"
+  },
+  {
+    "iso2": "CI",
+    "name": "Côte d’Ivoire",
+    "callingCode": "+225",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "CK",
+    "name": "Cook Islands",
+    "callingCode": "+682",
+    "defaultTimeZone": "Pacific/Rarotonga",
+    "defaultCurrency": "NZD"
+  },
+  {
+    "iso2": "CL",
+    "name": "Chile",
+    "callingCode": "+56",
+    "defaultTimeZone": "America/Coyhaique",
+    "defaultCurrency": "CLP"
+  },
+  {
+    "iso2": "CM",
+    "name": "Cameroon",
+    "callingCode": "+237",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XAF"
+  },
+  {
+    "iso2": "CN",
+    "name": "China",
+    "callingCode": "+86",
+    "defaultTimeZone": "Asia/Shanghai",
+    "defaultCurrency": "CNY"
+  },
+  {
+    "iso2": "CO",
+    "name": "Colombia",
+    "callingCode": "+57",
+    "defaultTimeZone": "America/Bogota",
+    "defaultCurrency": "COP"
+  },
+  {
+    "iso2": "CR",
+    "name": "Costa Rica",
+    "callingCode": "+506",
+    "defaultTimeZone": "America/Costa_Rica",
+    "defaultCurrency": "CRC"
+  },
+  {
+    "iso2": "CU",
+    "name": "Cuba",
+    "callingCode": "+53",
+    "defaultTimeZone": "America/Havana",
+    "defaultCurrency": "CUP"
+  },
+  {
+    "iso2": "CV",
+    "name": "Cape Verde",
+    "callingCode": "+238",
+    "defaultTimeZone": "Atlantic/Cape_Verde",
+    "defaultCurrency": "CVE"
+  },
+  {
+    "iso2": "CW",
+    "name": "Curaçao",
+    "callingCode": "+5999",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCG"
+  },
+  {
+    "iso2": "CX",
+    "name": "Christmas Island",
+    "callingCode": "+61",
+    "defaultTimeZone": "Asia/Bangkok",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "CY",
+    "name": "Cyprus",
+    "callingCode": "+357",
+    "defaultTimeZone": "Asia/Famagusta",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "CZ",
+    "name": "Czechia",
+    "callingCode": "+420",
+    "defaultTimeZone": "Europe/Prague",
+    "defaultCurrency": "CZK"
+  },
+  {
+    "iso2": "DE",
+    "name": "Germany",
+    "callingCode": "+49",
+    "defaultTimeZone": "Europe/Berlin",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "DJ",
+    "name": "Djibouti",
+    "callingCode": "+253",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "DJF"
+  },
+  {
+    "iso2": "DK",
+    "name": "Denmark",
+    "callingCode": "+45",
+    "defaultTimeZone": "Europe/Berlin",
+    "defaultCurrency": "DKK"
+  },
+  {
+    "iso2": "DM",
+    "name": "Dominica",
+    "callingCode": "+1767",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "DO",
+    "name": "Dominican Republic",
+    "callingCode": "+1809",
+    "defaultTimeZone": "America/Santo_Domingo",
+    "defaultCurrency": "DOP"
+  },
+  {
+    "iso2": "DZ",
+    "name": "Algeria",
+    "callingCode": "+213",
+    "defaultTimeZone": "Africa/Algiers",
+    "defaultCurrency": "DZD"
+  },
+  {
+    "iso2": "EC",
+    "name": "Ecuador",
+    "callingCode": "+593",
+    "defaultTimeZone": "America/Guayaquil",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "EE",
+    "name": "Estonia",
+    "callingCode": "+372",
+    "defaultTimeZone": "Europe/Tallinn",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "EG",
+    "name": "Egypt",
+    "callingCode": "+20",
+    "defaultTimeZone": "Africa/Cairo",
+    "defaultCurrency": "EGP"
+  },
+  {
+    "iso2": "EH",
+    "name": "Western Sahara",
+    "callingCode": "+212",
+    "defaultTimeZone": "Africa/El_Aaiun",
+    "defaultCurrency": "MAD"
+  },
+  {
+    "iso2": "ER",
+    "name": "Eritrea",
+    "callingCode": "+291",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "ERN"
+  },
+  {
+    "iso2": "ES",
+    "name": "Spain",
+    "callingCode": "+34",
+    "defaultTimeZone": "Africa/Ceuta",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "ET",
+    "name": "Ethiopia",
+    "callingCode": "+251",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "ETB"
+  },
+  {
+    "iso2": "FI",
+    "name": "Finland",
+    "callingCode": "+358",
+    "defaultTimeZone": "Europe/Helsinki",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "FJ",
+    "name": "Fiji",
+    "callingCode": "+679",
+    "defaultTimeZone": "Pacific/Fiji",
+    "defaultCurrency": "FJD"
+  },
+  {
+    "iso2": "FK",
+    "name": "Falkland Islands",
+    "callingCode": "+500",
+    "defaultTimeZone": "Atlantic/Stanley",
+    "defaultCurrency": "FKP"
+  },
+  {
+    "iso2": "FM",
+    "name": "Micronesia",
+    "callingCode": "+691",
+    "defaultTimeZone": "Pacific/Guadalcanal",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "FO",
+    "name": "Faroe Islands",
+    "callingCode": "+298",
+    "defaultTimeZone": "Atlantic/Faroe",
+    "defaultCurrency": "DKK"
+  },
+  {
+    "iso2": "FR",
+    "name": "France",
+    "callingCode": "+33",
+    "defaultTimeZone": "Europe/Paris",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "GA",
+    "name": "Gabon",
+    "callingCode": "+241",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XAF"
+  },
+  {
+    "iso2": "GB",
+    "name": "United Kingdom",
+    "callingCode": "+44",
+    "defaultTimeZone": "Europe/London",
+    "defaultCurrency": "GBP"
+  },
+  {
+    "iso2": "GD",
+    "name": "Grenada",
+    "callingCode": "+1473",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "GE",
+    "name": "Georgia",
+    "callingCode": "+995",
+    "defaultTimeZone": "Asia/Tbilisi",
+    "defaultCurrency": "GEL"
+  },
+  {
+    "iso2": "GF",
+    "name": "French Guiana",
+    "callingCode": "+594",
+    "defaultTimeZone": "America/Cayenne",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "GG",
+    "name": "Guernsey",
+    "callingCode": "+44",
+    "defaultTimeZone": "Europe/London",
+    "defaultCurrency": "GBP"
+  },
+  {
+    "iso2": "GH",
+    "name": "Ghana",
+    "callingCode": "+233",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "GHS"
+  },
+  {
+    "iso2": "GI",
+    "name": "Gibraltar",
+    "callingCode": "+350",
+    "defaultTimeZone": "Europe/Gibraltar",
+    "defaultCurrency": "GIP"
+  },
+  {
+    "iso2": "GL",
+    "name": "Greenland",
+    "callingCode": "+299",
+    "defaultTimeZone": "America/Danmarkshavn",
+    "defaultCurrency": "DKK"
+  },
+  {
+    "iso2": "GM",
+    "name": "Gambia",
+    "callingCode": "+220",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "GMD"
+  },
+  {
+    "iso2": "GN",
+    "name": "Guinea",
+    "callingCode": "+224",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "GNF"
+  },
+  {
+    "iso2": "GP",
+    "name": "Guadeloupe",
+    "callingCode": "+590",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "GQ",
+    "name": "Equatorial Guinea",
+    "callingCode": "+240",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XAF"
+  },
+  {
+    "iso2": "GR",
+    "name": "Greece",
+    "callingCode": "+30",
+    "defaultTimeZone": "Europe/Athens",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "GS",
+    "name": "South Georgia & South Sandwich Islands",
+    "callingCode": "+500",
+    "defaultTimeZone": "Atlantic/South_Georgia",
+    "defaultCurrency": "GBP"
+  },
+  {
+    "iso2": "GT",
+    "name": "Guatemala",
+    "callingCode": "+502",
+    "defaultTimeZone": "America/Guatemala",
+    "defaultCurrency": "GTQ"
+  },
+  {
+    "iso2": "GU",
+    "name": "Guam",
+    "callingCode": "+1671",
+    "defaultTimeZone": "Pacific/Guam",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "GW",
+    "name": "Guinea-Bissau",
+    "callingCode": "+245",
+    "defaultTimeZone": "Africa/Bissau",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "GY",
+    "name": "Guyana",
+    "callingCode": "+592",
+    "defaultTimeZone": "America/Guyana",
+    "defaultCurrency": "GYD"
+  },
+  {
+    "iso2": "HK",
+    "name": "Hong Kong SAR China",
+    "callingCode": "+852",
+    "defaultTimeZone": "Asia/Hong_Kong",
+    "defaultCurrency": "HKD"
+  },
+  {
+    "iso2": "HM",
+    "name": "Heard & McDonald Islands",
+    "callingCode": "+61",
+    "defaultTimeZone": null,
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "HN",
+    "name": "Honduras",
+    "callingCode": "+504",
+    "defaultTimeZone": "America/Tegucigalpa",
+    "defaultCurrency": "HNL"
+  },
+  {
+    "iso2": "HR",
+    "name": "Croatia",
+    "callingCode": "+385",
+    "defaultTimeZone": "Europe/Belgrade",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "HT",
+    "name": "Haiti",
+    "callingCode": "+509",
+    "defaultTimeZone": "America/Port-au-Prince",
+    "defaultCurrency": "HTG"
+  },
+  {
+    "iso2": "HU",
+    "name": "Hungary",
+    "callingCode": "+36",
+    "defaultTimeZone": "Europe/Budapest",
+    "defaultCurrency": "HUF"
+  },
+  {
+    "iso2": "ID",
+    "name": "Indonesia",
+    "callingCode": "+62",
+    "defaultTimeZone": "Asia/Jakarta",
+    "defaultCurrency": "IDR"
+  },
+  {
+    "iso2": "IE",
+    "name": "Ireland",
+    "callingCode": "+353",
+    "defaultTimeZone": "Europe/Dublin",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "IL",
+    "name": "Israel",
+    "callingCode": "+972",
+    "defaultTimeZone": "Asia/Jerusalem",
+    "defaultCurrency": "ILS"
+  },
+  {
+    "iso2": "IM",
+    "name": "Isle of Man",
+    "callingCode": "+44",
+    "defaultTimeZone": "Europe/London",
+    "defaultCurrency": "GBP"
+  },
+  {
+    "iso2": "IN",
+    "name": "India",
+    "callingCode": "+91",
+    "defaultTimeZone": "Asia/Kolkata",
+    "defaultCurrency": "INR"
+  },
+  {
+    "iso2": "IO",
+    "name": "British Indian Ocean Territory",
+    "callingCode": "+246",
+    "defaultTimeZone": "Indian/Chagos",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "IQ",
+    "name": "Iraq",
+    "callingCode": "+964",
+    "defaultTimeZone": "Asia/Baghdad",
+    "defaultCurrency": "IQD"
+  },
+  {
+    "iso2": "IR",
+    "name": "Iran",
+    "callingCode": "+98",
+    "defaultTimeZone": "Asia/Tehran",
+    "defaultCurrency": "IRR"
+  },
+  {
+    "iso2": "IS",
+    "name": "Iceland",
+    "callingCode": "+354",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "ISK"
+  },
+  {
+    "iso2": "IT",
+    "name": "Italy",
+    "callingCode": "+39",
+    "defaultTimeZone": "Europe/Rome",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "JE",
+    "name": "Jersey",
+    "callingCode": "+44",
+    "defaultTimeZone": "Europe/London",
+    "defaultCurrency": "GBP"
+  },
+  {
+    "iso2": "JM",
+    "name": "Jamaica",
+    "callingCode": "+1876",
+    "defaultTimeZone": "America/Jamaica",
+    "defaultCurrency": "JMD"
+  },
+  {
+    "iso2": "JO",
+    "name": "Jordan",
+    "callingCode": "+962",
+    "defaultTimeZone": "Asia/Amman",
+    "defaultCurrency": "JOD"
+  },
+  {
+    "iso2": "JP",
+    "name": "Japan",
+    "callingCode": "+81",
+    "defaultTimeZone": "Asia/Tokyo",
+    "defaultCurrency": "JPY"
+  },
+  {
+    "iso2": "KE",
+    "name": "Kenya",
+    "callingCode": "+254",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "KES"
+  },
+  {
+    "iso2": "KG",
+    "name": "Kyrgyzstan",
+    "callingCode": "+996",
+    "defaultTimeZone": "Asia/Bishkek",
+    "defaultCurrency": "KGS"
+  },
+  {
+    "iso2": "KH",
+    "name": "Cambodia",
+    "callingCode": "+855",
+    "defaultTimeZone": "Asia/Bangkok",
+    "defaultCurrency": "KHR"
+  },
+  {
+    "iso2": "KI",
+    "name": "Kiribati",
+    "callingCode": "+686",
+    "defaultTimeZone": "Pacific/Kanton",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "KM",
+    "name": "Comoros",
+    "callingCode": "+269",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "KMF"
+  },
+  {
+    "iso2": "KN",
+    "name": "St. Kitts & Nevis",
+    "callingCode": "+1869",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "KP",
+    "name": "North Korea",
+    "callingCode": "+850",
+    "defaultTimeZone": "Asia/Pyongyang",
+    "defaultCurrency": "KPW"
+  },
+  {
+    "iso2": "KR",
+    "name": "South Korea",
+    "callingCode": "+82",
+    "defaultTimeZone": "Asia/Seoul",
+    "defaultCurrency": "KRW"
+  },
+  {
+    "iso2": "KW",
+    "name": "Kuwait",
+    "callingCode": "+965",
+    "defaultTimeZone": "Asia/Riyadh",
+    "defaultCurrency": "KWD"
+  },
+  {
+    "iso2": "KY",
+    "name": "Cayman Islands",
+    "callingCode": "+1345",
+    "defaultTimeZone": "America/Panama",
+    "defaultCurrency": "KYD"
+  },
+  {
+    "iso2": "KZ",
+    "name": "Kazakhstan",
+    "callingCode": "+7",
+    "defaultTimeZone": "Asia/Almaty",
+    "defaultCurrency": "KZT"
+  },
+  {
+    "iso2": "LA",
+    "name": "Laos",
+    "callingCode": "+856",
+    "defaultTimeZone": "Asia/Bangkok",
+    "defaultCurrency": "LAK"
+  },
+  {
+    "iso2": "LB",
+    "name": "Lebanon",
+    "callingCode": "+961",
+    "defaultTimeZone": "Asia/Beirut",
+    "defaultCurrency": "LBP"
+  },
+  {
+    "iso2": "LC",
+    "name": "St. Lucia",
+    "callingCode": "+1758",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "LI",
+    "name": "Liechtenstein",
+    "callingCode": "+423",
+    "defaultTimeZone": "Europe/Zurich",
+    "defaultCurrency": "CHF"
+  },
+  {
+    "iso2": "LK",
+    "name": "Sri Lanka",
+    "callingCode": "+94",
+    "defaultTimeZone": "Asia/Colombo",
+    "defaultCurrency": "LKR"
+  },
+  {
+    "iso2": "LR",
+    "name": "Liberia",
+    "callingCode": "+231",
+    "defaultTimeZone": "Africa/Monrovia",
+    "defaultCurrency": "LRD"
+  },
+  {
+    "iso2": "LS",
+    "name": "Lesotho",
+    "callingCode": "+266",
+    "defaultTimeZone": "Africa/Johannesburg",
+    "defaultCurrency": "LSL"
+  },
+  {
+    "iso2": "LT",
+    "name": "Lithuania",
+    "callingCode": "+370",
+    "defaultTimeZone": "Europe/Vilnius",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "LU",
+    "name": "Luxembourg",
+    "callingCode": "+352",
+    "defaultTimeZone": "Europe/Brussels",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "LV",
+    "name": "Latvia",
+    "callingCode": "+371",
+    "defaultTimeZone": "Europe/Riga",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "LY",
+    "name": "Libya",
+    "callingCode": "+218",
+    "defaultTimeZone": "Africa/Tripoli",
+    "defaultCurrency": "LYD"
+  },
+  {
+    "iso2": "MA",
+    "name": "Morocco",
+    "callingCode": "+212",
+    "defaultTimeZone": "Africa/Casablanca",
+    "defaultCurrency": "MAD"
+  },
+  {
+    "iso2": "MC",
+    "name": "Monaco",
+    "callingCode": "+377",
+    "defaultTimeZone": "Europe/Paris",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "MD",
+    "name": "Moldova",
+    "callingCode": "+373",
+    "defaultTimeZone": "Europe/Chisinau",
+    "defaultCurrency": "MDL"
+  },
+  {
+    "iso2": "ME",
+    "name": "Montenegro",
+    "callingCode": "+382",
+    "defaultTimeZone": "Europe/Belgrade",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "MF",
+    "name": "St. Martin",
+    "callingCode": "+590",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "MG",
+    "name": "Madagascar",
+    "callingCode": "+261",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "MGA"
+  },
+  {
+    "iso2": "MH",
+    "name": "Marshall Islands",
+    "callingCode": "+692",
+    "defaultTimeZone": "Pacific/Kwajalein",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "MK",
+    "name": "North Macedonia",
+    "callingCode": "+389",
+    "defaultTimeZone": "Europe/Belgrade",
+    "defaultCurrency": "MKD"
+  },
+  {
+    "iso2": "ML",
+    "name": "Mali",
+    "callingCode": "+223",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "MM",
+    "name": "Myanmar (Burma)",
+    "callingCode": "+95",
+    "defaultTimeZone": "Asia/Yangon",
+    "defaultCurrency": "MMK"
+  },
+  {
+    "iso2": "MN",
+    "name": "Mongolia",
+    "callingCode": "+976",
+    "defaultTimeZone": "Asia/Hovd",
+    "defaultCurrency": "MNT"
+  },
+  {
+    "iso2": "MO",
+    "name": "Macao SAR China",
+    "callingCode": "+853",
+    "defaultTimeZone": "Asia/Macau",
+    "defaultCurrency": "MOP"
+  },
+  {
+    "iso2": "MP",
+    "name": "Northern Mariana Islands",
+    "callingCode": "+1670",
+    "defaultTimeZone": "Pacific/Guam",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "MQ",
+    "name": "Martinique",
+    "callingCode": "+596",
+    "defaultTimeZone": "America/Martinique",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "MR",
+    "name": "Mauritania",
+    "callingCode": "+222",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "MRU"
+  },
+  {
+    "iso2": "MS",
+    "name": "Montserrat",
+    "callingCode": "+1664",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "MT",
+    "name": "Malta",
+    "callingCode": "+356",
+    "defaultTimeZone": "Europe/Malta",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "MU",
+    "name": "Mauritius",
+    "callingCode": "+230",
+    "defaultTimeZone": "Indian/Mauritius",
+    "defaultCurrency": "MUR"
+  },
+  {
+    "iso2": "MV",
+    "name": "Maldives",
+    "callingCode": "+960",
+    "defaultTimeZone": "Indian/Maldives",
+    "defaultCurrency": "MVR"
+  },
+  {
+    "iso2": "MW",
+    "name": "Malawi",
+    "callingCode": "+265",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "MWK"
+  },
+  {
+    "iso2": "MX",
+    "name": "Mexico",
+    "callingCode": "+52",
+    "defaultTimeZone": "America/Bahia_Banderas",
+    "defaultCurrency": "MXN"
+  },
+  {
+    "iso2": "MY",
+    "name": "Malaysia",
+    "callingCode": "+60",
+    "defaultTimeZone": "Asia/Kuching",
+    "defaultCurrency": "MYR"
+  },
+  {
+    "iso2": "MZ",
+    "name": "Mozambique",
+    "callingCode": "+258",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "MZN"
+  },
+  {
+    "iso2": "NA",
+    "name": "Namibia",
+    "callingCode": "+264",
+    "defaultTimeZone": "Africa/Windhoek",
+    "defaultCurrency": "NAD"
+  },
+  {
+    "iso2": "NC",
+    "name": "New Caledonia",
+    "callingCode": "+687",
+    "defaultTimeZone": "Pacific/Noumea",
+    "defaultCurrency": "XPF"
+  },
+  {
+    "iso2": "NE",
+    "name": "Niger",
+    "callingCode": "+227",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "NF",
+    "name": "Norfolk Island",
+    "callingCode": "+672",
+    "defaultTimeZone": "Pacific/Norfolk",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "NG",
+    "name": "Nigeria",
+    "callingCode": "+234",
+    "defaultTimeZone": "Africa/Lagos",
+    "defaultCurrency": "NGN"
+  },
+  {
+    "iso2": "NI",
+    "name": "Nicaragua",
+    "callingCode": "+505",
+    "defaultTimeZone": "America/Managua",
+    "defaultCurrency": "NIO"
+  },
+  {
+    "iso2": "NL",
+    "name": "Netherlands",
+    "callingCode": "+31",
+    "defaultTimeZone": "Europe/Brussels",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "NO",
+    "name": "Norway",
+    "callingCode": "+47",
+    "defaultTimeZone": "Europe/Berlin",
+    "defaultCurrency": "NOK"
+  },
+  {
+    "iso2": "NP",
+    "name": "Nepal",
+    "callingCode": "+977",
+    "defaultTimeZone": "Asia/Kathmandu",
+    "defaultCurrency": "NPR"
+  },
+  {
+    "iso2": "NR",
+    "name": "Nauru",
+    "callingCode": "+674",
+    "defaultTimeZone": "Pacific/Nauru",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "NU",
+    "name": "Niue",
+    "callingCode": "+683",
+    "defaultTimeZone": "Pacific/Niue",
+    "defaultCurrency": "NZD"
+  },
+  {
+    "iso2": "NZ",
+    "name": "New Zealand",
+    "callingCode": "+64",
+    "defaultTimeZone": "Pacific/Auckland",
+    "defaultCurrency": "NZD"
+  },
+  {
+    "iso2": "OM",
+    "name": "Oman",
+    "callingCode": "+968",
+    "defaultTimeZone": "Asia/Dubai",
+    "defaultCurrency": "OMR"
+  },
+  {
+    "iso2": "PA",
+    "name": "Panama",
+    "callingCode": "+507",
+    "defaultTimeZone": "America/Panama",
+    "defaultCurrency": "PAB"
+  },
+  {
+    "iso2": "PE",
+    "name": "Peru",
+    "callingCode": "+51",
+    "defaultTimeZone": "America/Lima",
+    "defaultCurrency": "PEN"
+  },
+  {
+    "iso2": "PF",
+    "name": "French Polynesia",
+    "callingCode": "+689",
+    "defaultTimeZone": "Pacific/Gambier",
+    "defaultCurrency": "XPF"
+  },
+  {
+    "iso2": "PG",
+    "name": "Papua New Guinea",
+    "callingCode": "+675",
+    "defaultTimeZone": "Pacific/Bougainville",
+    "defaultCurrency": "PGK"
+  },
+  {
+    "iso2": "PH",
+    "name": "Philippines",
+    "callingCode": "+63",
+    "defaultTimeZone": "Asia/Manila",
+    "defaultCurrency": "PHP"
+  },
+  {
+    "iso2": "PK",
+    "name": "Pakistan",
+    "callingCode": "+92",
+    "defaultTimeZone": "Asia/Karachi",
+    "defaultCurrency": "PKR"
+  },
+  {
+    "iso2": "PL",
+    "name": "Poland",
+    "callingCode": "+48",
+    "defaultTimeZone": "Europe/Warsaw",
+    "defaultCurrency": "PLN"
+  },
+  {
+    "iso2": "PM",
+    "name": "St. Pierre & Miquelon",
+    "callingCode": "+508",
+    "defaultTimeZone": "America/Miquelon",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "PN",
+    "name": "Pitcairn Islands",
+    "callingCode": "+64",
+    "defaultTimeZone": "Pacific/Pitcairn",
+    "defaultCurrency": "NZD"
+  },
+  {
+    "iso2": "PR",
+    "name": "Puerto Rico",
+    "callingCode": "+1787",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "PS",
+    "name": "Palestinian Territories",
+    "callingCode": "+970",
+    "defaultTimeZone": "Asia/Gaza",
+    "defaultCurrency": "ILS"
+  },
+  {
+    "iso2": "PT",
+    "name": "Portugal",
+    "callingCode": "+351",
+    "defaultTimeZone": "Atlantic/Azores",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "PW",
+    "name": "Palau",
+    "callingCode": "+680",
+    "defaultTimeZone": "Pacific/Palau",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "PY",
+    "name": "Paraguay",
+    "callingCode": "+595",
+    "defaultTimeZone": "America/Asuncion",
+    "defaultCurrency": "PYG"
+  },
+  {
+    "iso2": "QA",
+    "name": "Qatar",
+    "callingCode": "+974",
+    "defaultTimeZone": "Asia/Qatar",
+    "defaultCurrency": "QAR"
+  },
+  {
+    "iso2": "RE",
+    "name": "Réunion",
+    "callingCode": "+262",
+    "defaultTimeZone": "Asia/Dubai",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "RO",
+    "name": "Romania",
+    "callingCode": "+40",
+    "defaultTimeZone": "Europe/Bucharest",
+    "defaultCurrency": "RON"
+  },
+  {
+    "iso2": "RS",
+    "name": "Serbia",
+    "callingCode": "+381",
+    "defaultTimeZone": "Europe/Belgrade",
+    "defaultCurrency": "RSD"
+  },
+  {
+    "iso2": "RU",
+    "name": "Russia",
+    "callingCode": "+7",
+    "defaultTimeZone": "Asia/Anadyr",
+    "defaultCurrency": "RUB"
+  },
+  {
+    "iso2": "RW",
+    "name": "Rwanda",
+    "callingCode": "+250",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "RWF"
+  },
+  {
+    "iso2": "SA",
+    "name": "Saudi Arabia",
+    "callingCode": "+966",
+    "defaultTimeZone": "Asia/Riyadh",
+    "defaultCurrency": "SAR"
+  },
+  {
+    "iso2": "SB",
+    "name": "Solomon Islands",
+    "callingCode": "+677",
+    "defaultTimeZone": "Pacific/Guadalcanal",
+    "defaultCurrency": "SBD"
+  },
+  {
+    "iso2": "SC",
+    "name": "Seychelles",
+    "callingCode": "+248",
+    "defaultTimeZone": "Asia/Dubai",
+    "defaultCurrency": "SCR"
+  },
+  {
+    "iso2": "SD",
+    "name": "Sudan",
+    "callingCode": "+249",
+    "defaultTimeZone": "Africa/Khartoum",
+    "defaultCurrency": "SDG"
+  },
+  {
+    "iso2": "SE",
+    "name": "Sweden",
+    "callingCode": "+46",
+    "defaultTimeZone": "Europe/Berlin",
+    "defaultCurrency": "SEK"
+  },
+  {
+    "iso2": "SG",
+    "name": "Singapore",
+    "callingCode": "+65",
+    "defaultTimeZone": "Asia/Singapore",
+    "defaultCurrency": "SGD"
+  },
+  {
+    "iso2": "SH",
+    "name": "St. Helena",
+    "callingCode": "+290",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "SHP"
+  },
+  {
+    "iso2": "SI",
+    "name": "Slovenia",
+    "callingCode": "+386",
+    "defaultTimeZone": "Europe/Belgrade",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "SJ",
+    "name": "Svalbard & Jan Mayen",
+    "callingCode": "+4779",
+    "defaultTimeZone": "Europe/Berlin",
+    "defaultCurrency": "NOK"
+  },
+  {
+    "iso2": "SK",
+    "name": "Slovakia",
+    "callingCode": "+421",
+    "defaultTimeZone": "Europe/Prague",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "SL",
+    "name": "Sierra Leone",
+    "callingCode": "+232",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "SLE"
+  },
+  {
+    "iso2": "SM",
+    "name": "San Marino",
+    "callingCode": "+378",
+    "defaultTimeZone": "Europe/Rome",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "SN",
+    "name": "Senegal",
+    "callingCode": "+221",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "SO",
+    "name": "Somalia",
+    "callingCode": "+252",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "SOS"
+  },
+  {
+    "iso2": "SR",
+    "name": "Suriname",
+    "callingCode": "+597",
+    "defaultTimeZone": "America/Paramaribo",
+    "defaultCurrency": "SRD"
+  },
+  {
+    "iso2": "SS",
+    "name": "South Sudan",
+    "callingCode": "+211",
+    "defaultTimeZone": "Africa/Juba",
+    "defaultCurrency": "SSP"
+  },
+  {
+    "iso2": "ST",
+    "name": "São Tomé & Príncipe",
+    "callingCode": "+239",
+    "defaultTimeZone": "Africa/Sao_Tome",
+    "defaultCurrency": "STN"
+  },
+  {
+    "iso2": "SV",
+    "name": "El Salvador",
+    "callingCode": "+503",
+    "defaultTimeZone": "America/El_Salvador",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "SX",
+    "name": "Sint Maarten",
+    "callingCode": "+1721",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCG"
+  },
+  {
+    "iso2": "SY",
+    "name": "Syria",
+    "callingCode": "+963",
+    "defaultTimeZone": "Asia/Damascus",
+    "defaultCurrency": "SYP"
+  },
+  {
+    "iso2": "SZ",
+    "name": "Eswatini",
+    "callingCode": "+268",
+    "defaultTimeZone": "Africa/Johannesburg",
+    "defaultCurrency": "SZL"
+  },
+  {
+    "iso2": "TC",
+    "name": "Turks & Caicos Islands",
+    "callingCode": "+1649",
+    "defaultTimeZone": "America/Grand_Turk",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "TD",
+    "name": "Chad",
+    "callingCode": "+235",
+    "defaultTimeZone": "Africa/Ndjamena",
+    "defaultCurrency": "XAF"
+  },
+  {
+    "iso2": "TF",
+    "name": "French Southern Territories",
+    "callingCode": "+262",
+    "defaultTimeZone": "Asia/Dubai",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "TG",
+    "name": "Togo",
+    "callingCode": "+228",
+    "defaultTimeZone": "Africa/Abidjan",
+    "defaultCurrency": "XOF"
+  },
+  {
+    "iso2": "TH",
+    "name": "Thailand",
+    "callingCode": "+66",
+    "defaultTimeZone": "Asia/Bangkok",
+    "defaultCurrency": "THB"
+  },
+  {
+    "iso2": "TJ",
+    "name": "Tajikistan",
+    "callingCode": "+992",
+    "defaultTimeZone": "Asia/Dushanbe",
+    "defaultCurrency": "TJS"
+  },
+  {
+    "iso2": "TK",
+    "name": "Tokelau",
+    "callingCode": "+690",
+    "defaultTimeZone": "Pacific/Fakaofo",
+    "defaultCurrency": "NZD"
+  },
+  {
+    "iso2": "TL",
+    "name": "Timor-Leste",
+    "callingCode": "+670",
+    "defaultTimeZone": "Asia/Dili",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "TM",
+    "name": "Turkmenistan",
+    "callingCode": "+993",
+    "defaultTimeZone": "Asia/Ashgabat",
+    "defaultCurrency": "TMT"
+  },
+  {
+    "iso2": "TN",
+    "name": "Tunisia",
+    "callingCode": "+216",
+    "defaultTimeZone": "Africa/Tunis",
+    "defaultCurrency": "TND"
+  },
+  {
+    "iso2": "TO",
+    "name": "Tonga",
+    "callingCode": "+676",
+    "defaultTimeZone": "Pacific/Tongatapu",
+    "defaultCurrency": "TOP"
+  },
+  {
+    "iso2": "TR",
+    "name": "Türkiye",
+    "callingCode": "+90",
+    "defaultTimeZone": "Europe/Istanbul",
+    "defaultCurrency": "TRY"
+  },
+  {
+    "iso2": "TT",
+    "name": "Trinidad & Tobago",
+    "callingCode": "+1868",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "TTD"
+  },
+  {
+    "iso2": "TV",
+    "name": "Tuvalu",
+    "callingCode": "+688",
+    "defaultTimeZone": "Pacific/Tarawa",
+    "defaultCurrency": "AUD"
+  },
+  {
+    "iso2": "TW",
+    "name": "Taiwan",
+    "callingCode": "+886",
+    "defaultTimeZone": "Asia/Taipei",
+    "defaultCurrency": "TWD"
+  },
+  {
+    "iso2": "TZ",
+    "name": "Tanzania",
+    "callingCode": "+255",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "TZS"
+  },
+  {
+    "iso2": "UA",
+    "name": "Ukraine",
+    "callingCode": "+380",
+    "defaultTimeZone": "Europe/Kyiv",
+    "defaultCurrency": "UAH"
+  },
+  {
+    "iso2": "UG",
+    "name": "Uganda",
+    "callingCode": "+256",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "UGX"
+  },
+  {
+    "iso2": "UM",
+    "name": "U.S. Outlying Islands",
+    "callingCode": "+1",
+    "defaultTimeZone": "Pacific/Pago_Pago",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "US",
+    "name": "United States",
+    "callingCode": "+1",
+    "defaultTimeZone": "America/Adak",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "UY",
+    "name": "Uruguay",
+    "callingCode": "+598",
+    "defaultTimeZone": "America/Montevideo",
+    "defaultCurrency": "UYU"
+  },
+  {
+    "iso2": "UZ",
+    "name": "Uzbekistan",
+    "callingCode": "+998",
+    "defaultTimeZone": "Asia/Samarkand",
+    "defaultCurrency": "UZS"
+  },
+  {
+    "iso2": "VA",
+    "name": "Vatican City",
+    "callingCode": "+379",
+    "defaultTimeZone": "Europe/Rome",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "VC",
+    "name": "St. Vincent & Grenadines",
+    "callingCode": "+1784",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "XCD"
+  },
+  {
+    "iso2": "VE",
+    "name": "Venezuela",
+    "callingCode": "+58",
+    "defaultTimeZone": "America/Caracas",
+    "defaultCurrency": "VES"
+  },
+  {
+    "iso2": "VG",
+    "name": "British Virgin Islands",
+    "callingCode": "+1284",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "VI",
+    "name": "U.S. Virgin Islands",
+    "callingCode": "+1340",
+    "defaultTimeZone": "America/Puerto_Rico",
+    "defaultCurrency": "USD"
+  },
+  {
+    "iso2": "VN",
+    "name": "Vietnam",
+    "callingCode": "+84",
+    "defaultTimeZone": "Asia/Bangkok",
+    "defaultCurrency": "VND"
+  },
+  {
+    "iso2": "VU",
+    "name": "Vanuatu",
+    "callingCode": "+678",
+    "defaultTimeZone": "Pacific/Efate",
+    "defaultCurrency": "VUV"
+  },
+  {
+    "iso2": "WF",
+    "name": "Wallis & Futuna",
+    "callingCode": "+681",
+    "defaultTimeZone": "Pacific/Tarawa",
+    "defaultCurrency": "XPF"
+  },
+  {
+    "iso2": "WS",
+    "name": "Samoa",
+    "callingCode": "+685",
+    "defaultTimeZone": "Pacific/Apia",
+    "defaultCurrency": "WST"
+  },
+  {
+    "iso2": "YE",
+    "name": "Yemen",
+    "callingCode": "+967",
+    "defaultTimeZone": "Asia/Riyadh",
+    "defaultCurrency": "YER"
+  },
+  {
+    "iso2": "YT",
+    "name": "Mayotte",
+    "callingCode": "+262",
+    "defaultTimeZone": "Africa/Nairobi",
+    "defaultCurrency": "EUR"
+  },
+  {
+    "iso2": "ZA",
+    "name": "South Africa",
+    "callingCode": "+27",
+    "defaultTimeZone": "Africa/Johannesburg",
+    "defaultCurrency": "ZAR"
+  },
+  {
+    "iso2": "ZM",
+    "name": "Zambia",
+    "callingCode": "+260",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "ZMW"
+  },
+  {
+    "iso2": "ZW",
+    "name": "Zimbabwe",
+    "callingCode": "+263",
+    "defaultTimeZone": "Africa/Maputo",
+    "defaultCurrency": "ZWG"
+  }
+]
