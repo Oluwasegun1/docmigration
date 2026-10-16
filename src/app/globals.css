@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Source of truth: docs/design-system.md.
+ * Contrast ratios are documented there. Notably, --color-status-pending
+ * must not be used as text directly on --color-surface-muted (4.39:1).
+ */
+@theme {
+  /* Core palette */
+  --color-primary: #0f766e;
+  --color-on-primary: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f3f4f6;
+  --color-text: #111827;
+  --color-text-muted: #4b5563;
+  --color-border: #6b7280;
+  --color-border-subtle: #d1d5db;
+
+  /* Status */
+  --color-status-confirmed: #15803d;
+  --color-status-conditional: #b45309;
+  --color-status-estimate: #1d4ed8;
+  --color-status-critical: #b91c1c;
+  --color-status-pending: #6b7280;
+
+  /* Typography: system stack, no web-font download */
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
+
+  --text-display: 1.75rem; /* 28px */
+  --text-display--line-height: 1.25;
+  --text-display--font-weight: 600;
+  --text-heading: 1.25rem; /* 20px */
+  --text-heading--line-height: 1.3;
+  --text-heading--font-weight: 600;
+  --text-body: 1rem; /* 16px */
+  --text-body--line-height: 1.5;
+  --text-caption: 0.8125rem; /* 13px */
+  --text-caption--line-height: 1.4;
+
+  /* Touch targets: 44px minimum, 8px gap */
+  --spacing-target: 2.75rem;
+  --spacing-target-gap: 0.5rem;
+}
+
+:root {
+  --target-min: 2.75rem;
+  --target-gap: 0.5rem;
+  /* Keeps focused elements clear of sticky header / bottom tab bar (WCAG 2.4.11) */
+  --sticky-top: 4rem;
+  --sticky-bottom: 4.5rem;
+}
+
+html {
+  scroll-padding-top: var(--sticky-top);
+  scroll-padding-bottom: var(--sticky-bottom);
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
+/* Visible focus: 2px primary ring, 2px offset (>= 3:1 on surface and muted) */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Alive 404 Motion System
+ * All animations are finite, calm, and end in their natural resting states.
+ * Resting state is the default; animations are enhanced via @media (prefers-reduced-motion: no-preference).
+ */
+@keyframes notfound-fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes notfound-compass-swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  28% {
+    transform: rotate(275deg);
+  }
+  55% {
+    transform: rotate(175deg);
+  }
+  78% {
+    transform: rotate(235deg);
+  }
+  90% {
+    transform: rotate(216deg);
+  }
+  100% {
+    transform: rotate(220deg);
+  }
+}
+
+@keyframes notfound-route-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes notfound-traveller-horizontal {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 92%;
+    opacity: 1;
+  }
+}
+
+@keyframes notfound-traveller-vertical {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 92%;
+    opacity: 1;
+  }
+}
+
+@keyframes notfound-stop-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes notfound-pulse-twice {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  25% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  75% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+}
+
+@keyframes notfound-wobble {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-notfound-fade-1 {
+    animation: notfound-fade-rise 500ms cubic-bezier(0, 0, 0.2, 1) 0ms backwards;
+  }
+  .animate-notfound-fade-2 {
+    animation: notfound-fade-rise 500ms cubic-bezier(0, 0, 0.2, 1) 60ms backwards;
+  }
+  .animate-notfound-fade-3 {
+    animation: notfound-fade-rise 500ms cubic-bezier(0, 0, 0.2, 1) 120ms backwards;
+  }
+  .animate-notfound-compass {
+    transform-origin: center;
+    animation: notfound-compass-swing 2.2s cubic-bezier(0.35, 0.2, 0.15, 1) 0ms backwards;
+  }
+  .animate-notfound-route {
+    animation: notfound-route-draw 2.4s cubic-bezier(0.2, 0, 0.2, 1) 0.3s backwards;
+  }
+  .animate-notfound-traveller-h {
+    offset-path: path("M 32 40 C 180 40, 240 70, 390 40 S 580 10, 688 40");
+    animation: notfound-traveller-horizontal 2.4s cubic-bezier(0.2, 0, 0.2, 1) 0.3s backwards;
+  }
+  .animate-notfound-traveller-v {
+    offset-path: path("M 28 24 C 28 110, 44 180, 28 260 S 12 360, 28 440");
+    animation: notfound-traveller-vertical 2.4s cubic-bezier(0.2, 0, 0.2, 1) 0.3s backwards;
+  }
+  .animate-notfound-stop-1 {
+    animation: notfound-stop-pop 300ms cubic-bezier(0, 0, 0.2, 1) 0.6s backwards;
+  }
+  .animate-notfound-stop-2 {
+    animation: notfound-stop-pop 300ms cubic-bezier(0, 0, 0.2, 1) 1.4s backwards;
+  }
+  .animate-notfound-stop-3 {
+    animation: notfound-stop-pop 300ms cubic-bezier(0, 0, 0.2, 1) 2.1s backwards;
+  }
+  .animate-notfound-pulse {
+    transform-origin: center;
+    animation: notfound-pulse-twice 1.8s ease-in-out 2.2s backwards;
+  }
+  .animate-notfound-wobble {
+    animation: notfound-wobble 400ms ease-in-out;
+  }
+}
+

@@ -1,0 +1,4 @@
+-- Seed data for LOCAL DEVELOPMENT ONLY. Never run against production.
+-- Regulatory content must come from verified, source-backed records
+-- created through the admin workflow, not from this file.
+-- (Intentionally empty in the initial setup.)

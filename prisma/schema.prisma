@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum InternshipStatus {
+  not_started
+  in_progress
+  completed
+  not_applicable
+  unknown
+
+  @@map("internship_status")
+}
+
+enum LanguageTestStatus {
+  unknown
+  not_required
+  not_started
+  booked
+  passed
+  expired
+  exempt
+
+  @@map("language_test_status")
+}
+
+enum TimelineWindow {
+  within_6_months
+  six_to_twelve_months @map("6_12_months")
+  one_to_two_years     @map("1_2_years")
+  exploring
+  unknown
+
+  @@map("timeline_window")
+}
+
+enum PlanTaskStatus {
+  not_started
+  in_progress
+  waiting
+  blocked
+  completed
+
+  @@map("plan_task_status")
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+
+  @@map("task_priority")
+}
+
+enum ContentStatus {
+  draft
+  published
+  withdrawn
+
+  @@map("content_status")
+}
+
+enum ResourceType {
+  regulator_guidance
+  application_portal
+  examination
+  language_test
+  immigration
+  fees
+  other
+
+  @@map("resource_type")
+}
+
+model Country {
+  code             String            @id @db.Char(2)
+  name             String
+  regulators       Regulator[]
+  pathways         Pathway[]
+  resources        Resource[]
+  destinationGoals DestinationGoal[]
+
+  @@map("countries")
+}
+
+model Regulator {
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  country    String            @db.Char(2)
+  name       String
+  shortName  String            @map("short_name")
+  
+  countryRel Country           @relation(fields: [country], references: [code])
+  domains    RegulatorDomain[]
+  pathways   Pathway[]
+  resources  Resource[]
+
+  @@unique([country, shortName])
+  @@map("regulators")
+}
+
+model RegulatorDomain {
+  regulatorId  String    @map("regulator_id") @db.Uuid
+  domain       String
+  
+  regulatorRel Regulator @relation(fields: [regulatorId], references: [id])
+
+  @@id([regulatorId, domain])
+  @@map("regulator_domains")
+}
+
+model Pathway {
+  id           String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  country      String            @db.Char(2)
+  regulatorId  String            @map("regulator_id") @db.Uuid
+  slug         String            @unique
+  name         String
+  profession   String            @default("doctor")
+  isActive     Boolean           @default(true) @map("is_active")
+
+  countryRel   Country           @relation(fields: [country], references: [code])
+  regulatorRel Regulator         @relation(fields: [regulatorId], references: [id])
+  resources    Resource[]
+  plans        Plan[]
+  planTasks    PlanTask[]
+  destinationGoals DestinationGoal[]
+
+  @@map("pathways")
+}
+
+model Resource {
+  id            String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  regulatorId   String        @map("regulator_id") @db.Uuid
+  country       String        @db.Char(2)
+  pathwayId     String?       @map("pathway_id") @db.Uuid
+  title         String
+  resourceType  ResourceType  @map("resource_type")
+  sourceUrl     String        @map("source_url")
+  verifiedDate  DateTime?     @map("verified_date") @db.Date
+  reviewDueDate DateTime?     @map("review_due_date") @db.Date
+  status        ContentStatus @default(draft)
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz
+
+  regulatorRel  Regulator     @relation(fields: [regulatorId], references: [id])
+  countryRel    Country       @relation(fields: [country], references: [code])
+  pathwayRel    Pathway?      @relation(fields: [pathwayId], references: [id])
+
+  @@map("resources")
+}
+
+model Profile {
+  userId               String             @id @map("user_id") @db.Uuid
+  preferredName        String?            @map("preferred_name")
+  residenceCountry     String?            @map("residence_country") @db.Char(2)
+  medicalSchool        String?            @map("medical_school")
+  medicalSchoolCountry String?            @map("medical_school_country") @db.Char(2)
+  graduationYear       Int?               @map("graduation_year")
+  internshipStatus     InternshipStatus   @default(unknown) @map("internship_status")
+  specialty            String?
+  languageTestStatus   LanguageTestStatus @default(unknown) @map("language_test_status")
+  timeline             TimelineWindow     @default(unknown)
+  createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt            DateTime           @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("profiles")
+}
+
+model DestinationGoal {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  country    String   @db.Char(2)
+  pathwayId  String?  @map("pathway_id") @db.Uuid
+  priority   Int      @default(1) @db.SmallInt
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  countryRel Country  @relation(fields: [country], references: [code])
+  pathwayRel Pathway? @relation(fields: [pathwayId], references: [id])
+
+  @@unique([userId, country, pathwayId])
+  @@map("destination_goals")
+}
+
+model Plan {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String     @map("user_id") @db.Uuid
+  pathwayId  String     @map("pathway_id") @db.Uuid
+  status     String     @default("active")
+  createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz
+
+  pathwayRel Pathway    @relation(fields: [pathwayId], references: [id])
+  tasks      PlanTask[]
+
+  @@unique([userId, pathwayId])
+  @@map("plans")
+}
+
+model PlanTask {
+  id               String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  planId           String                 @map("plan_id") @db.Uuid
+  userId           String                 @map("user_id") @db.Uuid
+  pathwayId        String                 @map("pathway_id") @db.Uuid
+  title            String
+  description      String?
+  priority         TaskPriority           @default(medium)
+  status           PlanTaskStatus         @default(not_started)
+  sortOrder        Int                    @map("sort_order")
+  dueDate          DateTime?              @map("due_date") @db.Date
+  statusUpdatedAt  DateTime               @default(now()) @map("status_updated_at") @db.Timestamptz
+  completedAt      DateTime?              @map("completed_at") @db.Timestamptz
+  createdAt        DateTime               @default(now()) @map("created_at") @db.Timestamptz
+
+  planRel          Plan                   @relation(fields: [planId], references: [id], onDelete: Cascade)
+  pathwayRel       Pathway                @relation(fields: [pathwayId], references: [id])
+  dependencies     PlanTaskDependency[]   @relation("TaskDependencies")
+  dependentOnMe    PlanTaskDependency[]   @relation("TaskDependents")
+
+  @@index([userId, planId])
+  @@map("plan_tasks")
+}
+
+model PlanTaskDependency {
+  taskId          String   @map("task_id") @db.Uuid
+  dependsOnTaskId String   @map("depends_on_task_id") @db.Uuid
+
+  taskRel         PlanTask @relation("TaskDependencies", fields: [taskId], references: [id], onDelete: Cascade)
+  dependsOnRel    PlanTask @relation("TaskDependents", fields: [dependsOnTaskId], references: [id], onDelete: Cascade)
+
+  @@id([taskId, dependsOnTaskId])
+  @@map("plan_task_dependencies")
+}
