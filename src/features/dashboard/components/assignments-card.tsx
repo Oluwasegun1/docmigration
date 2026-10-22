@@ -1,7 +1,27 @@
 import * as React from "react";
 import { Stethoscope } from "lucide-react";
 
-export function AssignmentsCard() {
+export interface UpcomingMilestoneProps {
+  regulator?: string;
+  category?: string;
+  title?: string;
+  date?: string;
+  duration?: string;
+}
+
+export interface AssignmentsCardProps {
+  milestone?: UpcomingMilestoneProps | null;
+}
+
+export function AssignmentsCard({ milestone }: AssignmentsCardProps) {
+  const item = milestone || {
+    regulator: "GMC UK",
+    category: "Licensing Exam",
+    title: "PLAB 1 / AMC Examination Review",
+    date: "20 June 2026, 10:30 AM",
+    duration: "02 h 45 m",
+  };
+
   return (
     <div className="space-y-2.5">
       <h2 className="text-base font-bold text-slate-900">Upcoming Milestone</h2>
@@ -16,15 +36,15 @@ export function AssignmentsCard() {
 
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-md bg-teal-100/80 px-2 py-0.5 text-[10px] font-bold text-teal-800 uppercase tracking-wide">
-              <span>GMC UK</span>
+              <span>{item.regulator}</span>
               <span>·</span>
-              <span>Licensing Exam</span>
+              <span>{item.category}</span>
             </div>
             <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-1">
-              PLAB 1 / AMC Examination Review
+              {item.title}
             </h3>
             <p className="text-xs font-medium text-slate-400 mt-0.5">
-              20 June 2026, 10:30 AM
+              {item.date}
             </p>
           </div>
         </div>
@@ -36,7 +56,7 @@ export function AssignmentsCard() {
               Duration
             </span>
             <span className="text-xs sm:text-sm font-semibold text-slate-700">
-              02 h 45 m
+              {item.duration}
             </span>
           </div>
 

@@ -36,6 +36,12 @@ export const MIGRATION_NAV_ITEMS: NavItem[] = [
     status: "available",
   },
   {
+    title: "Matches",
+    href: "/matches",
+    icon: Compass,
+    status: "available",
+  },
+  {
     title: "My Migration Plan",
     href: "/plan",
     icon: FileCheck2,
@@ -49,7 +55,7 @@ export const MIGRATION_NAV_ITEMS: NavItem[] = [
   },
   {
     title: "Pathways & Requirements",
-    href: "/destinations",
+    href: "/explore",
     icon: Compass,
     status: "available",
   },

@@ -1,0 +1,125 @@
+/**
+ * Development Example Pathway: clearly fake placeholder pathway.
+ * Every row flagged isPlaceholder = true.
+ * Used for local development and verification.
+ * Refused when NODE_ENV=production.
+ */
+
+export const EXAMPLE_PATHWAY_BUNDLE = {
+  isPlaceholder: true,
+  source: {
+    id: "src-example-regulator",
+    url: "https://example.org/regulator-guidance",
+    title: "Example Regulator Guidance",
+    publisher: "Example Regulatory Body",
+    verifiedAt: "2026-10-17T00:00:00Z",
+    status: "live",
+  },
+  pathway: {
+    id: "pathway-example",
+    slug: "EXAMPLE",
+    name: "Example Doctor Pathway",
+    professionId: "doctor",
+    originCountry: "NG",
+    destinationCountry: "GB",
+    categoryLabelKey: "pathway.category.standard_route",
+    status: "beta",
+  },
+  version: {
+    id: "pathway-version-example-1",
+    version: 1,
+    status: "published",
+    publishedAt: "2026-10-17T00:00:00Z",
+  },
+  criteria: [
+    {
+      id: "crit-example-1",
+      key: "primary_medical_qualification",
+      profileField: "medicalSchoolCountry",
+      operator: "equals" as const,
+      expected: "NG",
+      mandatory: true,
+      sourceId: "src-example-regulator",
+      explanationKey: "criteria.example_qualification.explanation",
+      verifiedAt: "2026-10-17T00:00:00Z",
+      isPlaceholder: true,
+    },
+    {
+      id: "crit-example-2",
+      key: "internship_completion",
+      profileField: "internshipStatus",
+      operator: "equals" as const,
+      expected: "completed",
+      mandatory: true,
+      sourceId: "src-example-regulator",
+      explanationKey: "criteria.example_internship.explanation",
+      verifiedAt: "2026-10-17T00:00:00Z",
+      isPlaceholder: true,
+    },
+  ],
+  templates: [
+    {
+      id: "tmpl-example-1",
+      key: "example_origin_documents",
+      category: "origin_country",
+      titleKey: "Example task: Origin Medical Board Verification",
+      bodyKey: "Example task: Request certificate of good standing from origin medical council.",
+      intakeKey: "Have you obtained a Certificate of Good Standing from your home council?",
+      intakeGroup: "origin_country",
+      intakeOrder: 1,
+      askAtIntake: true,
+      isIrreversiblePayment: false,
+      sourceId: "src-example-regulator",
+      isPlaceholder: true,
+    },
+    {
+      id: "tmpl-example-2",
+      key: "example_verification_payment",
+      category: "origin_country",
+      titleKey: "Example task: Primary Verification & Fee Payment",
+      bodyKey: "Example task: Pay the primary credential verification fee and upload qualification.",
+      intakeKey: "Have you paid the international credential verification fee?",
+      intakeGroup: "origin_country",
+      intakeOrder: 2,
+      askAtIntake: true,
+      isIrreversiblePayment: true, // First irreversible payment
+      sourceId: "src-example-regulator",
+      isPlaceholder: true,
+    },
+    {
+      id: "tmpl-example-3",
+      key: "example_language_test",
+      category: "exams",
+      titleKey: "Example task: English Language Competence",
+      bodyKey: "Example task: Achieve required scores in occupational English examination.",
+      intakeKey: "Have you booked or achieved the required score in the English language test?",
+      intakeGroup: "exams",
+      intakeOrder: 3,
+      askAtIntake: true,
+      isIrreversiblePayment: true,
+      sourceId: "src-example-regulator",
+      isPlaceholder: true,
+    },
+    {
+      id: "tmpl-example-4",
+      key: "example_registration_file",
+      category: "registration",
+      titleKey: "Example task: Final Regulator Registration Submission",
+      bodyKey: "Example task: Submit verified credentials and application to destination register.",
+      intakeKey: "Have you submitted your formal registration application to the regulator?",
+      intakeGroup: "registration",
+      intakeOrder: 4,
+      askAtIntake: true,
+      isIrreversiblePayment: false,
+      sourceId: "src-example-regulator",
+      isPlaceholder: true,
+    },
+  ],
+  dependencies: [
+    { taskTemplateId: "tmpl-example-2", dependsOnId: "tmpl-example-1" },
+    { taskTemplateId: "tmpl-example-3", dependsOnId: "tmpl-example-2" },
+    { taskTemplateId: "tmpl-example-4", dependsOnId: "tmpl-example-3" },
+  ],
+};
+
+export default EXAMPLE_PATHWAY_BUNDLE;

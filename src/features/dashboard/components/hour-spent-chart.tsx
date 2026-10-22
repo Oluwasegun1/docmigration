@@ -3,7 +3,14 @@
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 
-export function HourSpentChart() {
+export interface HourSpentChartProps {
+  totalHours?: string;
+  days?: { day: string; hours: number }[];
+}
+
+export function HourSpentChart({
+  totalHours = "126h 48m total recorded",
+}: HourSpentChartProps) {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
@@ -12,7 +19,7 @@ export function HourSpentChart() {
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-base font-bold text-slate-900">Preparation Time</h2>
-          <span className="text-xs font-medium text-slate-400">126h 48m total recorded</span>
+          <span className="text-xs font-medium text-slate-400">{totalHours}</span>
         </div>
         <button
           type="button"

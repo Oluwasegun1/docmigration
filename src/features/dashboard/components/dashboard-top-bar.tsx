@@ -3,16 +3,23 @@
 import * as React from "react";
 import { Search, Bell } from "lucide-react";
 
-export function DashboardTopBar() {
+export interface DashboardTopBarProps {
+  userName?: string | null;
+  profession?: string | null;
+}
+
+export function DashboardTopBar({ userName, profession }: DashboardTopBarProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
       {/* Title */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-          Dashboard
+          {userName ? `Welcome back, ${userName.split(" ")[0]} 👋` : "Dashboard"}
         </h1>
         <p className="text-xs font-medium text-slate-400 mt-0.5">
-          International Medical Registration & Pathway Progress
+          {profession
+            ? `${profession} Registration & Pathway Progress`
+            : "International Medical Registration & Pathway Progress"}
         </p>
       </div>
 

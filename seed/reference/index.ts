@@ -26,12 +26,12 @@ const countries: CountrySeed[] = generated.map((c) => ({
   ...LAUNCH_FLAGS[c.iso2],
 }));
 
-/** Seeded `hidden` to prove the shape works; never returned by any API. */
-const hiddenHealthcare = [
-  { slug: "nurse", label: "Nurse", plural: "Nurses", sortOrder: 20 },
-  { slug: "midwife", label: "Midwife", plural: "Midwives", sortOrder: 30 },
-  { slug: "pharmacist", label: "Pharmacist", plural: "Pharmacists", sortOrder: 40 },
-  { slug: "dentist", label: "Dentist", plural: "Dentists", sortOrder: 50 },
+/** Additional healthcare professions to demonstrate extensible states (waitlist and hidden). */
+const extraHealthcare = [
+  { slug: "nurse", label: "Nurse", plural: "Nurses", sortOrder: 20, status: "waitlist" as const },
+  { slug: "midwife", label: "Midwife", plural: "Midwives", sortOrder: 30, status: "hidden" as const },
+  { slug: "pharmacist", label: "Pharmacist", plural: "Pharmacists", sortOrder: 40, status: "waitlist" as const },
+  { slug: "dentist", label: "Dentist", plural: "Dentists", sortOrder: 50, status: "hidden" as const },
 ];
 
 const bundle: SeedBundle = {
@@ -48,12 +48,12 @@ const bundle: SeedBundle = {
       isRegulated: true,
       sortOrder: 10,
     },
-    ...hiddenHealthcare.map((p) => ({
+    ...extraHealthcare.map((p) => ({
       slug: p.slug,
       sector: "healthcare",
       label: { en: p.label },
       labelPlural: { en: p.plural },
-      status: "hidden" as const,
+      status: p.status,
       isRegulated: true,
       sortOrder: p.sortOrder,
     })),
@@ -77,7 +77,7 @@ const bundle: SeedBundle = {
       notesInternal: "PLACEHOLDER destination pending selection scorecard.",
     },
     // Hidden rows prove that later medical professions need rows only (Stage B).
-    ...hiddenHealthcare.map((p) => ({
+    ...extraHealthcare.map((p) => ({
       profession: p.slug,
       origin: "NG",
       destination: null,

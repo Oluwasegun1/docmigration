@@ -12,11 +12,28 @@ import {
   Stethoscope,
 } from "lucide-react";
 
-export interface ProfilePanelProps {
-  preferredName?: string | null;
+export interface ProfilePanelTask {
+  id: string;
+  title: string;
+  date: string;
+  status?: string;
 }
 
-export function ProfilePanel({ preferredName }: ProfilePanelProps) {
+export interface ProfilePanelProps {
+  preferredName?: string | null;
+  profession?: string | null;
+  qualification?: string | null;
+  originCountry?: string | null;
+  tasks?: ProfilePanelTask[];
+}
+
+export function ProfilePanel({
+  preferredName,
+  profession = "Doctor",
+  qualification = "MBBS",
+  originCountry = "Nigeria",
+  tasks: externalTasks,
+}: ProfilePanelProps) {
   const [selectedDay, setSelectedDay] = React.useState("20");
 
   const calendarDays = [
@@ -29,7 +46,7 @@ export function ProfilePanel({ preferredName }: ProfilePanelProps) {
     { day: "S", date: "27" },
   ];
 
-  const upcomingTasks = [
+  const defaultTasks = [
     {
       id: "epic-verification",
       title: "EPIC Primary Verification",
@@ -50,7 +67,7 @@ export function ProfilePanel({ preferredName }: ProfilePanelProps) {
     },
     {
       id: "mdcn-good-standing",
-      title: "MDCN Good Standing Certificate",
+      title: `${originCountry} Good Standing Certificate`,
       date: "20 Sep. 2026",
       icon: Award,
       iconBg: "bg-amber-50",
@@ -67,6 +84,26 @@ export function ProfilePanel({ preferredName }: ProfilePanelProps) {
       borderColor: "border-teal-100",
     },
   ];
+
+  const taskIcons = [FileCheck, Languages, Award, Stethoscope];
+  const taskColors = [
+    { bg: "bg-purple-50", text: "text-purple-600", border: "border-purple-100" },
+    { bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-100" },
+    { bg: "bg-amber-50", text: "text-amber-600", border: "border-amber-100" },
+    { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-100" },
+  ];
+
+  const upcomingTasks = (externalTasks && externalTasks.length > 0)
+    ? externalTasks.map((t, idx) => ({
+        id: t.id,
+        title: t.title,
+        date: t.date,
+        icon: taskIcons[idx % taskIcons.length],
+        iconBg: taskColors[idx % taskColors.length].bg,
+        iconColor: taskColors[idx % taskColors.length].text,
+        borderColor: taskColors[idx % taskColors.length].border,
+      }))
+    : defaultTasks;
 
   return (
     <aside className="w-full xl:w-80 shrink-0 space-y-6 rounded-3xl bg-white p-5 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.02)] border border-slate-100/90">
@@ -112,10 +149,14 @@ export function ProfilePanel({ preferredName }: ProfilePanelProps) {
         </div>
 
         <h3 className="mt-3 text-base font-bold text-slate-900">
-          {preferredName ? `Dr. ${preferredName}` : "Dr. Wade Warren"}
+          {preferredName
+            ? preferredName.startsWith("Dr.")
+              ? preferredName
+              : `Dr. ${preferredName}`
+            : "Dr. Medical Professional"}
         </h3>
         <p className="text-xs font-medium text-slate-500">
-          General Practitioner · MBBS
+          {profession} · {qualification}
         </p>
       </div>
 

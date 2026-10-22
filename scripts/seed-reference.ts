@@ -33,8 +33,13 @@ async function loadBundle(dir: string): Promise<SeedBundle> {
 async function main() {
   const { withDirs, dryRun } = parseArgs(process.argv.slice(2));
 
-  if (process.env.APP_ENV === "production" && withDirs.some((d) => d.includes("fixtures"))) {
-    throw new Error("Refusing to apply test fixtures when APP_ENV=production.");
+  const isProduction =
+    process.env.APP_ENV === "production" || process.env.NODE_ENV === "production";
+
+  if (isProduction && withDirs.some((d) => d.includes("fixtures"))) {
+    throw new Error(
+      "Refusing to apply test fixtures when APP_ENV=production or NODE_ENV=production.",
+    );
   }
 
   const url = process.env.DIRECT_URL || process.env.DATABASE_URL;
@@ -44,6 +49,11 @@ async function main() {
   try {
     for (const dir of ["seed/reference", ...withDirs]) {
       const bundle = await loadBundle(dir);
+      if (isProduction && (bundle as { isPlaceholder?: boolean }).isPlaceholder) {
+        throw new Error(
+          `Refusing to load placeholder bundle "${bundle.id}" when in production.`,
+        );
+      }
       const result = await prisma.$transaction(
         (tx) =>
           applyBundle(bundle, {

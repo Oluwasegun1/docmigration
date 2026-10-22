@@ -324,6 +324,34 @@ create table screening_criterion_results (
 
 Runs are append-only and written by the server screening service. Users cannot insert or edit results directly.
 
+### Match runs and results (Review pathway matches flow)
+
+```sql
+create table match_runs (
+  id                  uuid primary key default gen_random_uuid(),
+  user_id             uuid not null references auth.users(id) on delete cascade,
+  profile_snapshot    jsonb not null,
+  profile_hash        text not null,
+  engine_version      text not null,
+  content_fingerprint text not null,
+  created_at          timestamptz not null default now()
+);
+
+create table match_results (
+  id                  uuid primary key default gen_random_uuid(),
+  run_id              uuid not null references match_runs(id) on delete cascade,
+  pathway_id          uuid not null references pathways(id) on delete cascade,
+  pathway_version_id  uuid not null references pathway_versions(id) on delete cascade,
+  status              text not null check (status in ('requirement_unmet','potential_blocker','more_info_needed','potential_match')),
+  criteria            jsonb not null,
+  missing             jsonb not null default '[]'::jsonb,
+  sort_rank           int not null,
+  created_at          timestamptz not null default now()
+);
+```
+
+`save_match_run(...)` is an atomic, security-definer function enforcing user profile ownership, cooldown between checks, and returning existing runs when profile hash and content fingerprint are unchanged.
+
 ---
 
 ## 3. Plan and tasks

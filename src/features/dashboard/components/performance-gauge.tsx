@@ -1,7 +1,15 @@
-import * as React from "react";
+export interface PerformanceGaugeProps {
+  score?: number;
+  label?: string;
+  statusMessage?: string;
+}
 
-export function PerformanceGauge() {
-  const percentage = 72;
+export function PerformanceGauge({
+  score = 72,
+  label = "Pathway Readiness",
+  statusMessage = "Your migration readiness is progressing well!",
+}: PerformanceGaugeProps) {
+  const percentage = Math.min(100, Math.max(0, score));
   const radius = 68;
   const strokeWidth = 14;
   const arcLength = Math.PI * radius; // Half circumference
@@ -49,14 +57,14 @@ export function PerformanceGauge() {
               {percentage}%
             </span>
             <span className="block text-[11px] font-medium text-slate-400 -mt-0.5">
-              Pathway Readiness
+              {label}
             </span>
           </div>
         </div>
 
         {/* Motivational Status Line */}
         <p className="mt-3 text-xs font-medium text-slate-500 text-center">
-          Your migration readiness is almost ready!
+          {statusMessage}
         </p>
       </div>
 

@@ -40,9 +40,101 @@ export default function HomePage() {
           to its official source.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="bg-[#164E43] hover:bg-[#113E35]">
+            <Link href="/create-account">Create account</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="border-[#164E43] text-[#164E43]">
+            <Link href="/sign-in">Sign in</Link>
+          </Button>
+          <Button asChild size="lg" variant="ghost">
             <Link href="/destinations">Explore destinations and pathways</Link>
           </Button>
+        </div>
+      </section>
+
+      <section aria-labelledby="prototype-screens" className="p-6 rounded-2xl bg-white border border-[#C5D3CD] space-y-4 shadow-sm">
+        <div className="space-y-1">
+          <span className="text-xs font-bold tracking-wider text-[#164E43] uppercase">Interactive Prototype</span>
+          <h2 id="prototype-screens" className="text-2xl font-bold text-[#11241F]">
+            Accounts & Onboarding Prototype Screens
+          </h2>
+          <p className="text-sm text-[#4E625A]">
+            All 8 screens are fully interactive. Content for professions and countries is driven dynamically by reference data.
+          </p>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 pt-2">
+          <Link
+            href="/create-account"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Step 1</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">Create account</div>
+            <div className="text-xs text-[#637770] pt-1">Show/hide password, terms & research consent</div>
+          </Link>
+
+          <Link
+            href="/auth/check-email?email=doctor@example.com"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Verification</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">Check your email</div>
+            <div className="text-xs text-[#637770] pt-1">30s countdown resend, masked email, open app link</div>
+          </Link>
+
+          <Link
+            href="/signup/about-you"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Step 2</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">About you</div>
+            <div className="text-xs text-[#637770] pt-1">Switch Doctor (live) vs Nurse/Pharmacist (waitlist)</div>
+          </Link>
+
+          <Link
+            href="/signup/where-to"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Step 3</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">Where to</div>
+            <div className="text-xs text-[#637770] pt-1">Rank up to 3 destinations (1, 2, 3) & Not sure yet</div>
+          </Link>
+
+          <Link
+            href="/waitlist?profession=nurse&origin=NG&destination=Canada"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Waitlist</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">We are not live yet</div>
+            <div className="text-xs text-[#637770] pt-1">Extensible waitlist capture & summary card</div>
+          </Link>
+
+          <Link
+            href="/sign-in"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Authentication</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">Sign in</div>
+            <div className="text-xs text-[#637770] pt-1">Show/hide password & trigger sign-in error demo</div>
+          </Link>
+
+          <Link
+            href="/forgot-password"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Recovery</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">Forgot password</div>
+            <div className="text-xs text-[#637770] pt-1">Trigger identical confirmation demo</div>
+          </Link>
+
+          <Link
+            href="/auth/reset-password?token=demo"
+            className="p-3.5 rounded-xl border border-[#D5DFDA] hover:border-[#164E43] hover:bg-[#F2F7F4] transition group"
+          >
+            <div className="text-xs text-[#526860] font-medium">Reset</div>
+            <div className="font-semibold text-sm text-[#11241F] group-hover:text-[#164E43]">New password</div>
+            <div className="text-xs text-[#637770] pt-1">Show/hide password & password confirmation</div>
+          </Link>
         </div>
       </section>
 

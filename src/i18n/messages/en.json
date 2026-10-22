@@ -1,0 +1,112 @@
+{
+  "common": {
+    "brandName": "Migration Hub",
+    "back": "Back",
+    "continue": "Continue",
+    "saveAndExit": "Save and exit",
+    "savedAutomatically": "Saved automatically as you go.",
+    "contactSupport": "Contact support",
+    "beta": "Beta",
+    "waitlist": "Waitlist",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "auth": {
+    "createAccount": {
+      "step": "Step 1 of 3 · Account",
+      "title": "Create your account",
+      "subtitle": "Takes about two minutes. You can save and finish later.",
+      "nameLabel": "Your name",
+      "namePlaceholder": "As you want us to greet you",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordHint": "At least 10 characters. A short sentence you will remember works well.",
+      "termsLabel": "I agree to the {terms} and have read the {privacy}.",
+      "termsLink": "Terms",
+      "privacyLink": "Privacy Notice",
+      "researchConsentLabel": "Optional: use my anonymous answers to improve Migration Hub. You can change this any time.",
+      "submitButton": "Create account",
+      "disclaimer1": "Migration Hub is a planning tool. We are not a regulator, a law firm or an immigration adviser, and we never guarantee outcomes.",
+      "disclaimer2": "We will never ask for your password or any payment by message or email.",
+      "signInPrompt": "Sign in"
+    },
+    "checkEmail": {
+      "title": "Check your email",
+      "bodyPre": "If a new account can be created for",
+      "bodyPost": "we have sent you a link. Open it to confirm your email. It signs you in and takes you to the next step.",
+      "linkNotice": "The link works once and expires after a short time. Nothing is saved to your account until you open it.",
+      "openAppButton": "Open my email app",
+      "resendCountdown": "Send it again in {time}",
+      "resendButton": "Send again",
+      "differentEmail": "Use a different email",
+      "cannotFindTitle": "Cannot find it?",
+      "cannotFindBody": "Check your spam folder. Our emails come only from {domain}. We will never ask for your password or payment in an email.",
+      "footerNotice": "Wrong email or stuck? {link}"
+    },
+    "aboutYou": {
+      "step": "Step 2 of 3 · About you",
+      "title": "Tell us about your work",
+      "subtitle": "We use this to show only the routes that apply to you.",
+      "fieldLabel": "Field",
+      "professionLabel": "Your profession",
+      "trainedInLabel": "Country where you trained",
+      "trainedInPlaceholder": "Search or choose country",
+      "whyTrainedIn": "Why we ask: requirements depend on where you qualified.",
+      "continueButton": "Continue"
+    },
+    "whereTo": {
+      "step": "Step 3 of 3 · Where to",
+      "title": "Where are you thinking of going?",
+      "subtitle": "Pick up to three. The first one you tap is your top choice. You can change this later.",
+      "notSureYet": "Not sure yet",
+      "waitlistPrompt": "Your country is not here?",
+      "waitlistLink": "Tell us and join the waitlist",
+      "waitlistPost": "It helps us decide where to go next.",
+      "continueButton": "Continue to my profile",
+      "disclaimer": "Choosing a country does not guarantee a route. Always confirm with the official regulator."
+    },
+    "waitlist": {
+      "title": "We are not live for that yet",
+      "subtitle": "We do not cover this combination today. Join the waitlist and we will email you when we do. What you tell us helps decide what we build next.",
+      "professionLabel": "Profession",
+      "trainedInLabel": "Trained in",
+      "interestedInLabel": "Interested in",
+      "freeTextLabel": "Not the right profession? Tell us yours (optional)",
+      "freeTextPlaceholder": "For example: Civil engineer",
+      "consentLabel": "Email me when this becomes available. We use your answers only for this and to plan what to build.",
+      "submitButton": "Join the waitlist",
+      "pickSomethingElse": "Pick something else",
+      "footer": "Your account stays open. You get full access to plans as soon as your profession and countries launch."
+    },
+    "signIn": {
+      "title": "Sign in to your account",
+      "subtitle": "Continue planning your migration journey.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign in",
+      "errorUnknown": "Invalid email or password. Please check your credentials.",
+      "noAccountPrompt": "Don't have an account?",
+      "signUpLink": "Create an account"
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+      "emailLabel": "Email address",
+      "submitButton": "Send reset link",
+      "backToSignIn": "Back to sign in",
+      "confirmationTitle": "Check your email",
+      "confirmationBody": "If an account exists for that email, we have sent instructions to reset your password."
+    },
+    "newPassword": {
+      "title": "Set new password",
+      "subtitle": "Choose a strong password with at least 10 characters.",
+      "passwordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "submitButton": "Update password",
+      "successNotice": "Your password has been reset successfully. You can now sign in."
+    }
+  }
+}

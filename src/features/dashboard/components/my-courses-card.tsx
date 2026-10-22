@@ -2,8 +2,19 @@ import * as React from "react";
 import Link from "next/link";
 import { Compass, Globe, ChevronRight } from "lucide-react";
 
-export function MyCoursesCard() {
-  const pathways = [
+export interface PathwayProgressItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  progress: number;
+}
+
+export interface MyCoursesCardProps {
+  pathways?: PathwayProgressItem[];
+}
+
+export function MyCoursesCard({ pathways: externalPathways }: MyCoursesCardProps) {
+  const defaultPathways = [
     {
       id: "uk-gmc",
       title: "United Kingdom — GMC Registration",
@@ -20,6 +31,13 @@ export function MyCoursesCard() {
     },
   ];
 
+  const items = (externalPathways && externalPathways.length > 0)
+    ? externalPathways.map((p, idx) => ({
+        ...p,
+        icon: idx % 2 === 0 ? Compass : Globe,
+      }))
+    : defaultPathways;
+
   return (
     <div className="space-y-3">
       {/* Header */}
@@ -27,7 +45,7 @@ export function MyCoursesCard() {
         <div className="flex items-center gap-2">
           <h2 className="text-base font-bold text-slate-900">Active Pathways</h2>
           <span className="flex size-5 items-center justify-center rounded-full bg-teal-600 text-[11px] font-bold text-white">
-            2
+            {items.length}
           </span>
         </div>
         <Link
@@ -41,7 +59,7 @@ export function MyCoursesCard() {
 
       {/* Pathway List Rows */}
       <div className="space-y-2.5">
-        {pathways.map((pathway) => {
+        {items.map((pathway) => {
           const Icon = pathway.icon;
           return (
             <div

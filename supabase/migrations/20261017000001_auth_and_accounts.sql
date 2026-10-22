@@ -1,0 +1,223 @@
+-- CreateTable
+CREATE TABLE "users" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "name" TEXT,
+    "email" TEXT NOT NULL,
+    "email_verified" TIMESTAMPTZ,
+    "image" TEXT,
+    "role" TEXT NOT NULL DEFAULT 'user',
+    "status" TEXT NOT NULL DEFAULT 'active',
+    "locale" TEXT NOT NULL DEFAULT 'en',
+    "deleted_at" TIMESTAMPTZ,
+    "retention_expires_at" TIMESTAMPTZ,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "sessions" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "token" TEXT NOT NULL,
+    "expires_at" TIMESTAMPTZ NOT NULL,
+    "ip_address" TEXT,
+    "user_agent" TEXT,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "sessions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "accounts" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "account_id" TEXT NOT NULL,
+    "provider_id" TEXT NOT NULL,
+    "password" TEXT,
+    "access_token" TEXT,
+    "refresh_token" TEXT,
+    "id_token" TEXT,
+    "access_token_expires_at" TIMESTAMPTZ,
+    "refresh_token_expires_at" TIMESTAMPTZ,
+    "scope" TEXT,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "accounts_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "verifications" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "identifier" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
+    "purpose" TEXT NOT NULL,
+    "expires_at" TIMESTAMPTZ NOT NULL,
+    "used_at" TIMESTAMPTZ,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "verifications_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "consents" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "type" TEXT NOT NULL,
+    "granted" BOOLEAN NOT NULL,
+    "version" TEXT NOT NULL,
+    "ip_address" TEXT,
+    "user_agent" TEXT,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "consents_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "signup_drafts" (
+    "user_id" UUID NOT NULL,
+    "step" INTEGER NOT NULL DEFAULT 1,
+    "data_json" JSONB NOT NULL DEFAULT '{}',
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "signup_drafts_pkey" PRIMARY KEY ("user_id")
+);
+
+-- CreateTable
+CREATE TABLE "waitlist_entries" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "email" TEXT NOT NULL,
+    "profession_id" TEXT,
+    "profession_free_text" TEXT,
+    "origin_country" CHAR(2),
+    "destination_country" CHAR(2),
+    "consent_granted" BOOLEAN NOT NULL DEFAULT true,
+    "ip_address" TEXT,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "waitlist_entries_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "user_countries" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "country_code" CHAR(2) NOT NULL,
+    "role" TEXT NOT NULL,
+    "rank" INTEGER,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "user_countries_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "user_professions" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "profession_code" TEXT NOT NULL,
+    "is_primary" BOOLEAN NOT NULL DEFAULT true,
+    "sort_order" INTEGER NOT NULL DEFAULT 0,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "user_professions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "profile_answers" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "user_id" UUID NOT NULL,
+    "field_code" TEXT NOT NULL,
+    "value_json" JSONB NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "profile_answers_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE INDEX "users_status_retention_expires_at_idx" ON "users"("status", "retention_expires_at");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sessions_token_key" ON "sessions"("token");
+
+-- CreateIndex
+CREATE INDEX "sessions_user_id_idx" ON "sessions"("user_id");
+
+-- CreateIndex
+CREATE INDEX "sessions_token_idx" ON "sessions"("token");
+
+-- CreateIndex
+CREATE INDEX "accounts_user_id_idx" ON "accounts"("user_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "accounts_provider_id_account_id_key" ON "accounts"("provider_id", "account_id");
+
+-- CreateIndex
+CREATE INDEX "verifications_identifier_purpose_idx" ON "verifications"("identifier", "purpose");
+
+-- CreateIndex
+CREATE INDEX "verifications_value_idx" ON "verifications"("value");
+
+-- CreateIndex
+CREATE INDEX "consents_user_id_type_idx" ON "consents"("user_id", "type");
+
+-- CreateIndex
+CREATE INDEX "waitlist_entries_email_idx" ON "waitlist_entries"("email");
+
+-- CreateIndex
+CREATE INDEX "waitlist_entries_profession_id_origin_country_idx" ON "waitlist_entries"("profession_id", "origin_country");
+
+-- CreateIndex
+CREATE INDEX "user_countries_user_id_role_idx" ON "user_countries"("user_id", "role");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_countries_user_id_country_code_role_key" ON "user_countries"("user_id", "country_code", "role");
+
+-- CreateIndex
+CREATE INDEX "user_professions_user_id_idx" ON "user_professions"("user_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_professions_user_id_profession_code_key" ON "user_professions"("user_id", "profession_code");
+
+-- CreateIndex
+CREATE INDEX "profile_answers_user_id_field_code_idx" ON "profile_answers"("user_id", "field_code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "profile_answers_user_id_field_code_key" ON "profile_answers"("user_id", "field_code");
+
+-- AddForeignKey
+ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "consents" ADD CONSTRAINT "consents_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "signup_drafts" ADD CONSTRAINT "signup_drafts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_countries" ADD CONSTRAINT "user_countries_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_countries" ADD CONSTRAINT "user_countries_country_code_fkey" FOREIGN KEY ("country_code") REFERENCES "countries"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_professions" ADD CONSTRAINT "user_professions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_professions" ADD CONSTRAINT "user_professions_profession_code_fkey" FOREIGN KEY ("profession_code") REFERENCES "professions"("code") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "profile_answers" ADD CONSTRAINT "profile_answers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "profile_answers" ADD CONSTRAINT "profile_answers_field_code_fkey" FOREIGN KEY ("field_code") REFERENCES "profile_fields"("code") ON DELETE CASCADE ON UPDATE CASCADE;

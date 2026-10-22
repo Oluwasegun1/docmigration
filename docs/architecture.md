@@ -13,6 +13,7 @@ Flat navigation, no nested primary levels.
 | Slot    | Route        | Purpose                                               | Primary button (exactly one)                                           |
 | ------- | ------------ | ----------------------------------------------------- | ---------------------------------------------------------------------- |
 | Home    | `/dashboard` | Status summary and the next step                      | "Continue: <next task>"                                                |
+| Matches | `/matches`   | Review ranked, explainable pathway matches            | "Start a plan from this pathway" / "Check again"                       |
 | Explore | `/explore`   | Destinations, pathways, requirements                  | "Add to my plan" (on a pathway) / "Choose a destination" (on the list) |
 | Plan    | `/plan`      | Personal plan and tasks                               | "Do next task"                                                         |
 | Ask     | `/ask`       | Q&A from approved sources (future, feature-flagged)   | "Ask a question"                                                       |

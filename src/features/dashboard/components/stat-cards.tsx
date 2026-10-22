@@ -1,12 +1,22 @@
 import * as React from "react";
 import { RotateCcw, CheckCircle2, ShieldCheck } from "lucide-react";
 
-export function StatCards() {
+export interface StatCardsProps {
+  inProgressTasks?: number;
+  completedMilestones?: number;
+  verifiedRecords?: number;
+}
+
+export function StatCards({
+  inProgressTasks = 4,
+  completedMilestones = 18,
+  verifiedRecords = 12,
+}: StatCardsProps) {
   const stats = [
     {
       id: "in-progress",
       label: "In progress",
-      value: "4 Active Tasks",
+      value: `${inProgressTasks} Active Tasks`,
       icon: RotateCcw,
       iconBg: "bg-purple-50",
       iconBorder: "border-purple-100",
@@ -15,7 +25,7 @@ export function StatCards() {
     {
       id: "completed",
       label: "Completed",
-      value: "18 Milestones",
+      value: `${completedMilestones} Milestones`,
       icon: CheckCircle2,
       iconBg: "bg-emerald-50",
       iconBorder: "border-emerald-100",
@@ -24,7 +34,7 @@ export function StatCards() {
     {
       id: "verified",
       label: "Verified Records",
-      value: "12 Documents",
+      value: `${verifiedRecords} Documents`,
       icon: ShieldCheck,
       iconBg: "bg-teal-50",
       iconBorder: "border-teal-100",

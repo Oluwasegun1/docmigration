@@ -116,11 +116,13 @@ model Country {
   canBeOrigin      Boolean           @default(false) @map("can_be_origin")
   canBeDestination Boolean           @default(false) @map("can_be_destination")
   regulators       Regulator[]
-  pathways         Pathway[]
+  originPathways   Pathway[]         @relation("PathwayOrigin")
+  destPathways     Pathway[]         @relation("PathwayDestination")
   resources        Resource[]
   destinationGoals DestinationGoal[]
   originOfferings  Offering[]        @relation("OfferingOrigin")
   destOfferings    Offering[]        @relation("OfferingDestination")
+  userCountries    UserCountry[]
 
   @@map("countries")
 }
@@ -138,10 +140,11 @@ model Profession {
   isRegulated    Boolean @default(true) @map("is_regulated")
   sortOrder      Int     @default(0) @map("sort_order")
 
-  sectorRel      Sector?         @relation(fields: [sectorId], references: [slug])
-  pathways       Pathway[]
-  offerings      Offering[]
-  profileSchemas ProfileSchema[]
+  sectorRel       Sector?          @relation(fields: [sectorId], references: [slug])
+  pathways        Pathway[]
+  offerings       Offering[]
+  profileSchemas  ProfileSchema[]
+  userProfessions UserProfession[]
 
   @@map("professions")
 }
@@ -214,20 +217,22 @@ model ReferenceListItem {
 /// storage = 'answer' (ProfileAnswer row) or 'user_country' (virtual: reads/writes
 /// UserCountry for the role in storageJson.role).
 model ProfileField {
-  key            String   @id
+  key            String          @id
   type           String
-  labelKey       String   @map("label_key")
-  whyAskedKey    String   @map("why_asked_key")
-  helpKey        String?  @map("help_key")
-  optionsJson    Json?    @map("options_json")
-  validationJson Json?    @map("validation_json")
-  sensitivity    String   @default("standard")
-  category       String   @default("general")
-  storage        String   @default("answer")
-  storageJson    Json?    @map("storage_json")
-  purposeNote    String?  @map("purpose_note")
-  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamptz
+  labelKey       String          @map("label_key")
+  whyAskedKey    String          @map("why_asked_key")
+  helpKey        String?         @map("help_key")
+  optionsJson    Json?           @map("options_json")
+  validationJson Json?           @map("validation_json")
+  sensitivity    String          @default("standard")
+  category       String          @default("general")
+  storage        String          @default("answer")
+  storageJson    Json?           @map("storage_json")
+  purposeNote    String?         @map("purpose_note")
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime        @default(now()) @map("updated_at") @db.Timestamptz
+  answers        ProfileAnswer[]
+  criteria       Criterion[]
 
   @@map("profile_fields")
 }
@@ -290,28 +295,129 @@ model RegulatorDomain {
 }
 
 model Pathway {
-  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  country     String       @db.Char(2)
-  regulatorId String       @map("regulator_id") @db.Uuid
-  slug        String       @unique
-  name        String
-  profession  String       @default("doctor")
-  track       PathwayTrack @default(licensing)
-  isActive    Boolean      @default(true) @map("is_active")
+  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug               String           @unique
+  name               String
+  professionId       String           @map("profession_id")
+  originCountry      String           @map("origin_country") @db.Char(2)
+  destinationCountry String           @map("destination_country") @db.Char(2)
+  categoryLabelKey   String           @map("category_label_key")
+  status             String           @default("hidden") // 'live' | 'beta' | 'waitlist' | 'hidden'
+  regulatorId        String?          @map("regulator_id") @db.Uuid
+  track              PathwayTrack     @default(licensing)
+  isActive           Boolean          @default(true) @map("is_active")
+  createdAt          DateTime         @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt          DateTime         @default(now()) @map("updated_at") @db.Timestamptz
 
-  countryRel       Country           @relation(fields: [country], references: [code])
-  regulatorRel     Regulator         @relation(fields: [regulatorId], references: [id])
-  professionRel    Profession        @relation(fields: [profession], references: [code])
-  resources        Resource[]
-  requirements     Requirement[]
-  costs            PathwayCost[]
-  licensingLinks   PathwayLink[]     @relation("LicensingSide")
-  immigrationLinks PathwayLink[]     @relation("ImmigrationSide")
-  plans            Plan[]
-  planTasks        PlanTask[]
-  destinationGoals DestinationGoal[]
+  professionRel      Profession       @relation(fields: [professionId], references: [code])
+  originRel          Country          @relation("PathwayOrigin", fields: [originCountry], references: [code])
+  destRel            Country          @relation("PathwayDestination", fields: [destinationCountry], references: [code])
+  regulatorRel       Regulator?       @relation(fields: [regulatorId], references: [id])
+  versions           PathwayVersion[]
+  resources          Resource[]
+  requirements       Requirement[]
+  costs              PathwayCost[]
+  licensingLinks     PathwayLink[]    @relation("LicensingSide")
+  immigrationLinks   PathwayLink[]    @relation("ImmigrationSide")
+  destinationGoals   DestinationGoal[]
+  matchResults       MatchResult[]
 
+  @@index([professionId, originCountry, destinationCountry])
   @@map("pathways")
+}
+
+model PathwayVersion {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  pathwayId    String         @map("pathway_id") @db.Uuid
+  version      Int            @default(1)
+  status       String         @default("draft") // 'draft' | 'in_review' | 'published' | 'superseded' | 'withdrawn'
+  publishedAt  DateTime?      @map("published_at") @db.Timestamptz
+  supersededAt DateTime?      @map("superseded_at") @db.Timestamptz
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz
+
+  pathwayRel   Pathway        @relation(fields: [pathwayId], references: [id], onDelete: Cascade)
+  criteria     Criterion[]
+  templates    TaskTemplate[]
+  plans        MigrationPlan[]
+  assessments  AssessmentRun[]
+  matchResults MatchResult[]
+
+  @@unique([pathwayId, version])
+  @@index([pathwayId, status])
+  @@map("pathway_versions")
+}
+
+model Source {
+  id         String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  url        String
+  title      String
+  publisher  String
+  verifiedAt DateTime       @map("verified_at") @db.Timestamptz
+  status     String         @default("live") // 'live' | 'needs_review' | 'archived'
+  createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz
+
+  criteria   Criterion[]
+  templates  TaskTemplate[]
+
+  @@map("sources")
+}
+
+model Criterion {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  pathwayVersionId String         @map("pathway_version_id") @db.Uuid
+  key              String
+  profileField     String         @map("profile_field")
+  operator         String         // 'equals' | 'not_equals' | 'in' | 'not_in' | 'gte' | 'lte' | 'exists' | 'not_exists'
+  expected         Json
+  mandatory        Boolean        @default(true)
+  sourceId         String         @map("source_id") @db.Uuid
+  explanationKey   String         @map("explanation_key")
+  verifiedAt       DateTime       @map("verified_at") @db.Timestamptz
+  isPlaceholder    Boolean        @default(false) @map("is_placeholder")
+
+  pathwayVersionRel PathwayVersion @relation(fields: [pathwayVersionId], references: [id], onDelete: Cascade)
+  sourceRel         Source         @relation(fields: [sourceId], references: [id])
+  profileFieldRel   ProfileField   @relation(fields: [profileField], references: [key])
+
+  @@unique([pathwayVersionId, key])
+  @@map("criteria")
+}
+
+model TaskTemplate {
+  id                    String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  pathwayVersionId      String                   @map("pathway_version_id") @db.Uuid
+  key                   String
+  category              String                   // e.g. 'origin_country', 'exams', 'registration'
+  titleKey              String                   @map("title_key")
+  bodyKey               String                   @map("body_key")
+  intakeKey             String?                  @map("intake_key")
+  intakeGroup           String?                  @map("intake_group")
+  intakeOrder           Int                      @default(0) @map("intake_order")
+  askAtIntake           Boolean                  @default(true) @map("ask_at_intake")
+  isIrreversiblePayment Boolean                  @default(false) @map("is_irreversible_payment")
+  sourceId              String                   @map("source_id") @db.Uuid
+  isPlaceholder         Boolean                  @default(false) @map("is_placeholder")
+
+  pathwayVersionRel     PathwayVersion           @relation(fields: [pathwayVersionId], references: [id], onDelete: Cascade)
+  sourceRel             Source                   @relation(fields: [sourceId], references: [id])
+  dependencies          TaskTemplateDependency[] @relation("DependentTasks")
+  dependentOnMe         TaskTemplateDependency[] @relation("PrerequisiteTasks")
+  answers               IntakeAnswer[]
+  planTasks             PlanTask[]
+
+  @@unique([pathwayVersionId, key])
+  @@map("task_templates")
+}
+
+model TaskTemplateDependency {
+  taskTemplateId String       @map("task_template_id") @db.Uuid
+  dependsOnId    String       @map("depends_on_id") @db.Uuid
+
+  taskRel        TaskTemplate @relation("DependentTasks", fields: [taskTemplateId], references: [id], onDelete: Cascade)
+  dependsOnRel   TaskTemplate @relation("PrerequisiteTasks", fields: [dependsOnId], references: [id], onDelete: Cascade)
+
+  @@id([taskTemplateId, dependsOnId])
+  @@map("task_template_dependencies")
 }
 
 model Resource {
@@ -373,54 +479,86 @@ model DestinationGoal {
   @@map("destination_goals")
 }
 
-model Plan {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String   @map("user_id") @db.Uuid
-  pathwayId String   @map("pathway_id") @db.Uuid
-  status    String   @default("active")
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+model AssessmentRun {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String         @map("user_id") @db.Uuid
+  pathwayVersionId String         @map("pathway_version_id") @db.Uuid
+  status           String         // 'potential_match' | 'more_information_needed' | 'potential_blocker'
+  criteriaResults  Json           @map("criteria_results")
+  missingFields    Json           @map("missing_fields")
+  assessedAt       DateTime       @default(now()) @map("assessed_at") @db.Timestamptz
+  profileHash      String         @map("profile_hash")
 
-  pathwayRel   Pathway           @relation(fields: [pathwayId], references: [id])
-  tasks        PlanTask[]
-  requirements PlanRequirement[]
+  userRel          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pathwayVersionRel PathwayVersion @relation(fields: [pathwayVersionId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, pathwayId])
-  @@map("plans")
+  @@index([userId, pathwayVersionId])
+  @@map("assessment_runs")
+}
+
+model MigrationPlan {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String         @map("user_id") @db.Uuid
+  pathwayVersionId String         @map("pathway_version_id") @db.Uuid
+  pendingUpdate    Boolean        @default(false) @map("pending_update")
+  createdAt        DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime       @default(now()) @map("updated_at") @db.Timestamptz
+
+  userRel          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pathwayVersionRel PathwayVersion @relation(fields: [pathwayVersionId], references: [id])
+  tasks            PlanTask[]
+  intakeAnswers    IntakeAnswer[]
+
+  @@unique([userId, pathwayVersionId])
+  @@index([userId])
+  @@map("migration_plans")
 }
 
 model PlanTask {
-  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  planId          String         @map("plan_id") @db.Uuid
-  userId          String         @map("user_id") @db.Uuid
-  pathwayId       String         @map("pathway_id") @db.Uuid
-  title           String
-  description     String?
-  priority        TaskPriority   @default(medium)
-  status          PlanTaskStatus @default(not_started)
-  sortOrder       Int            @map("sort_order")
-  dueDate         DateTime?      @map("due_date") @db.Date
-  statusUpdatedAt DateTime       @default(now()) @map("status_updated_at") @db.Timestamptz
-  completedAt     DateTime?      @map("completed_at") @db.Timestamptz
-  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  id                    String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  planId                String        @map("plan_id") @db.Uuid
+  originTemplateTaskId  String?       @map("origin_template_task_id") @db.Uuid
+  templateKey           String        @map("template_key")
+  title                 String
+  category              String
+  status                String        @default("not_started") // 'not_started' | 'in_progress' | 'waiting_on_external_party' | 'done' | 'not_applicable'
+  verificationType      String        @default("user_reported") // 'user_reported' | 'regulator_confirmed'
+  userEdited            Boolean       @default(false) @map("user_edited")
+  reviewNeeded          Boolean       @default(false) @map("review_needed")
+  needsConfirmation     Boolean       @default(false) @map("needs_confirmation")
+  completedMonth        String?       @map("completed_month")
+  dueDate               DateTime?     @map("due_date") @db.Date
+  note                  String?
+  notApplicableReason   String?       @map("not_applicable_reason")
+  waitingOnText         String?       @map("waiting_on_text")
+  blockedBy             Json?         @map("blocked_by")
+  sortOrder             Int           @default(0) @map("sort_order")
+  isIrreversiblePayment Boolean       @default(false) @map("is_irreversible_payment")
+  sourceId              String?       @map("source_id") @db.Uuid
+  createdAt             DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt             DateTime      @default(now()) @map("updated_at") @db.Timestamptz
 
-  planRel       Plan                 @relation(fields: [planId], references: [id], onDelete: Cascade)
-  pathwayRel    Pathway              @relation(fields: [pathwayId], references: [id])
-  dependencies  PlanTaskDependency[] @relation("TaskDependencies")
-  dependentOnMe PlanTaskDependency[] @relation("TaskDependents")
+  planRel               MigrationPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  originTemplateRel     TaskTemplate? @relation(fields: [originTemplateTaskId], references: [id], onDelete: SetNull)
 
-  @@index([userId, planId])
+  @@index([planId, status])
   @@map("plan_tasks")
 }
 
-model PlanTaskDependency {
-  taskId          String @map("task_id") @db.Uuid
-  dependsOnTaskId String @map("depends_on_task_id") @db.Uuid
+model IntakeAnswer {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  planId         String        @map("plan_id") @db.Uuid
+  taskTemplateId String        @map("task_template_id") @db.Uuid
+  answer         String        // 'done' | 'in_progress' | 'waiting_on_external_party' | 'not_started' | 'not_applicable' | 'not_sure'
+  completedMonth String?       @map("completed_month")
+  note           String?
+  answeredAt     DateTime      @default(now()) @map("answered_at") @db.Timestamptz
 
-  taskRel      PlanTask @relation("TaskDependencies", fields: [taskId], references: [id], onDelete: Cascade)
-  dependsOnRel PlanTask @relation("TaskDependents", fields: [dependsOnTaskId], references: [id], onDelete: Cascade)
+  planRel        MigrationPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  taskTemplateRel TaskTemplate @relation(fields: [taskTemplateId], references: [id], onDelete: Cascade)
 
-  @@id([taskId, dependsOnTaskId])
-  @@map("plan_task_dependencies")
+  @@unique([planId, taskTemplateId])
+  @@map("intake_answers")
 }
 
 model PathwayLink {
@@ -453,7 +591,6 @@ model Requirement {
   resourceRel      Resource          @relation(fields: [resourceId], references: [id])
   supersedesRel    Requirement?      @relation("RequirementVersions", fields: [supersedesId], references: [id])
   supersededBy     Requirement[]     @relation("RequirementVersions")
-  planRequirements PlanRequirement[]
 
   @@unique([pathwayId, key, version])
   @@index([pathwayId, status])
@@ -484,19 +621,214 @@ model PathwayCost {
   @@map("pathway_costs")
 }
 
-model PlanRequirement {
-  id            String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  planId        String                @map("plan_id") @db.Uuid
-  userId        String                @map("user_id") @db.Uuid
-  requirementId String                @map("requirement_id") @db.Uuid
-  status        PlanRequirementStatus @default(not_started)
-  notes         String?
-  updatedAt     DateTime              @default(now()) @map("updated_at") @db.Timestamptz
+model User {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String?
+  email              String    @unique
+  emailVerified      Boolean   @default(false) @map("email_verified")
+  image              String?
+  role               String    @default("user")
+  status             String    @default("active")
+  deletedAt          DateTime? @map("deleted_at") @db.Timestamptz
+  retentionExpiresAt DateTime? @map("retention_expires_at") @db.Timestamptz
+  locale             String    @default("en")
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt          DateTime  @default(now()) @map("updated_at") @db.Timestamptz
 
-  planRel        Plan        @relation(fields: [planId], references: [id], onDelete: Cascade)
-  requirementRel Requirement @relation(fields: [requirementId], references: [id])
+  sessions        Session[]
+  accounts        Account[]
+  consents        Consent[]
+  signupDraft     SignupDraft?
+  countries       UserCountry[]
+  professions     UserProfession[]
+  profileAnswers  ProfileAnswer[]
+  waitlistEntries WaitlistEntry[]
+  assessmentRuns  AssessmentRun[]
+  migrationPlans  MigrationPlan[]
+  matchRuns       MatchRun[]
 
-  @@unique([planId, requirementId])
-  @@index([userId, planId])
-  @@map("plan_requirements")
+  @@map("users")
 }
+
+model Session {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  token     String   @unique
+  expiresAt DateTime @map("expires_at") @db.Timestamptz
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  userRel User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                String    @map("user_id") @db.Uuid
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at") @db.Timestamptz
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at") @db.Timestamptz
+  scope                 String?
+  idToken               String?   @map("id_token")
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt             DateTime  @default(now()) @map("updated_at") @db.Timestamptz
+
+  userRel User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  identifier String
+  value      String
+  purpose    String    @default("email_verification")
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz
+  usedAt     DateTime? @map("used_at") @db.Timestamptz
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt  DateTime  @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@index([identifier, purpose])
+  @@map("verifications")
+}
+
+model Consent {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String?   @map("user_id") @db.Uuid
+  email           String?
+  purpose         String
+  documentVersion String    @map("document_version")
+  grantedAt       DateTime  @default(now()) @map("granted_at") @db.Timestamptz
+  withdrawnAt     DateTime? @map("withdrawn_at") @db.Timestamptz
+  ipAddress       String?   @map("ip_address")
+  userAgent       String?   @map("user_agent")
+
+  userRel User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose])
+  @@map("consents")
+}
+
+model SignupDraft {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String?  @unique @map("user_id") @db.Uuid
+  email     String?
+  step      Int      @default(1)
+  dataJson  Json     @map("data_json")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  userRel User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("signup_drafts")
+}
+
+model WaitlistEntry {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String?  @map("user_id") @db.Uuid
+  email              String
+  professionId       String?  @map("profession_id")
+  professionFreeText String?  @map("profession_free_text")
+  originCountry      String   @map("origin_country") @db.Char(2)
+  destinationCountry String?  @map("destination_country") @db.Char(2)
+  consentId          String?  @map("consent_id") @db.Uuid
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  userRel User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([email, professionId])
+  @@map("waitlist_entries")
+}
+
+model UserCountry {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  countryCode String   @map("country_code") @db.Char(2)
+  role        String
+  priority    Int?     @db.SmallInt
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  userRel    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  countryRel Country @relation(fields: [countryCode], references: [code])
+
+  @@unique([userId, role, countryCode])
+  @@index([userId, role])
+  @@map("user_countries")
+}
+
+model UserProfession {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String   @map("user_id") @db.Uuid
+  professionCode String   @map("profession_code")
+  isPrimary      Boolean  @default(true) @map("is_primary")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  userRel       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  professionRel Profession @relation(fields: [professionCode], references: [code])
+
+  @@unique([userId, professionCode])
+  @@map("user_professions")
+}
+
+model ProfileAnswer {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  fieldKey      String   @map("field_key")
+  valueJson     Json     @map("value_json")
+  schemaVersion Int      @default(1) @map("schema_version")
+  updatedAt     DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  userRel  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fieldRel ProfileField @relation(fields: [fieldKey], references: [key])
+
+  @@unique([userId, fieldKey])
+  @@index([userId])
+  @@map("profile_answers")
+}
+
+model MatchRun {
+  id                 String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String        @map("user_id") @db.Uuid
+  profileSnapshot    Json          @map("profile_snapshot")
+  profileHash        String        @map("profile_hash")
+  engineVersion      String        @map("engine_version")
+  contentFingerprint String        @map("content_fingerprint")
+  createdAt          DateTime      @default(now()) @map("created_at") @db.Timestamptz
+
+  userRel            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  results            MatchResult[]
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([userId, profileHash, contentFingerprint])
+  @@map("match_runs")
+}
+
+model MatchResult {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  runId            String         @map("run_id") @db.Uuid
+  pathwayId        String         @map("pathway_id") @db.Uuid
+  pathwayVersionId String         @map("pathway_version_id") @db.Uuid
+  status           String         // 'requirement_unmet' | 'potential_blocker' | 'more_info_needed' | 'potential_match'
+  criteria         Json
+  missing          Json           @default("[]")
+  sortRank         Int            @map("sort_rank")
+  createdAt        DateTime       @default(now()) @map("created_at") @db.Timestamptz
+
+  runRel           MatchRun       @relation(fields: [runId], references: [id], onDelete: Cascade)
+  pathwayRel       Pathway        @relation(fields: [pathwayId], references: [id], onDelete: Cascade)
+  versionRel       PathwayVersion @relation(fields: [pathwayVersionId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@index([pathwayId])
+  @@index([pathwayVersionId])
+  @@map("match_results")
+}
+

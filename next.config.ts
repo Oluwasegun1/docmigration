@@ -12,7 +12,7 @@ const securityHeaders = [
     key: "Strict-Transport-Security",
     value: "max-age=63072000; includeSubDomains; preload",
   },
-  // A nonce-based Content-Security-Policy is planned; see docs/security.md.
+  // A nonce-based Content-Security-Policy is planned; see docs/security.md
 ];
 
 const nextConfig: NextConfig = {
